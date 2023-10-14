@@ -27,6 +27,7 @@ export const EventsCard = ({ event, categories, onClick }) => {
 			overflow="hidden"
 			variant="outline"
 			my={5}
+            minH={"350px"}
 			cursor="pointer"
 			_hover={{
 				transform: "scale(1.03)",
@@ -38,7 +39,7 @@ export const EventsCard = ({ event, categories, onClick }) => {
 				objectFit="cover"
 				maxW={{ base: "100%", lg: "35%", md: "35%", sm: "200px" }}
 				src={event.image}
-				alt="Event Image"
+				alt="Activity image"
 			/>
 
 			<Stack>

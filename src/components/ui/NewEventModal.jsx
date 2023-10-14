@@ -9,23 +9,27 @@ import {
 	ModalBody,
 	ModalFooter,
 } from "@chakra-ui/react";
-import React from "react";
 import { NewEventForm } from "../NewEventForm";
 
-const NewEventModal = ({ isOpen, onClose }) => {
+export const NewEventModal = ({ isOpen, onClose }) => {
+	const handleSubmit = (data) => {
+		console.log(data);
+		// Add your form submission logic here
+	};
+
 	return (
-		<Modal isOpen={isOpen} onClose={onClose}>
+		<Modal isOpen={isOpen} onClose={onClose} size={"xl"}>
 			<ModalOverlay />
 			<ModalContent>
-				<ModalHeader>Create your account</ModalHeader>
+				<ModalHeader>Create your own activity</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody pb={6}>
-					<NewEventForm />
+					<NewEventForm onSubmit={handleSubmit} />
 				</ModalBody>
 
 				<ModalFooter>
-					<Button colorScheme="blue" mr={3}>
-						Save
+					<Button type="submit" form="eventForm" colorScheme="cyan" mr={3}>
+						Submit
 					</Button>
 					<Button onClick={onClose}>Cancel</Button>
 				</ModalFooter>
@@ -33,5 +37,3 @@ const NewEventModal = ({ isOpen, onClose }) => {
 		</Modal>
 	);
 };
-
-export default NewEventModal;
