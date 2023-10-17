@@ -7,12 +7,12 @@ export const Navigation = () => {
 			<Flex alignItems="center" justifyContent="space-around">
 				<Center>
 					<nav>
-						<Link to="/">Link</Link>
+						<Link to="/">All activities</Link>
 					</nav>
 				</Center>
 				<Center>
 					<nav>
-						<Link to="/event/1">Link</Link>
+						<Link to="/event/1">EventPagina</Link>
 					</nav>
 				</Center>
 			</Flex>

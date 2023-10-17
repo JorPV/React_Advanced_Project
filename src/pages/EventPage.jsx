@@ -1,4 +1,5 @@
-import { Heading } from '@chakra-ui/react';
+import { Heading } from "@chakra-ui/react";
+import { Button as DeleteButton } from "@chakra-ui/react";
 // import { useLoaderData } from 'react-router-dom';
 
 export const loader = async ({ params }) => {
@@ -8,7 +9,12 @@ export const loader = async ({ params }) => {
 	};
 };
 
-export const EventPage = ( ) => {
-    // const { event } = useLoaderData();
-  return <Heading>Event pagina: </Heading>;
+export const EventPage = ({ deleteActivity }) => {
+	// const { event } = useLoaderData();
+	return (
+		<>
+			<Heading>Event pagina: </Heading>
+			<DeleteButton onClick={deleteActivity}>Delete event</DeleteButton>
+		</>
+	);
 };
