@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
 	Heading,
 	Card,
@@ -10,6 +11,14 @@ import {
 } from "@chakra-ui/react";
 
 export const EventsCard = ({ event, categories, onClick }) => {
+	// State to hold the event data
+	const [currentEvent, setCurrentEvent] = useState(event);
+
+	// Use useEffect to update the event data when it changes
+	useEffect(() => {
+		setCurrentEvent(event);
+	}, [event]);
+    
 	const timeOptions = {
 		weekday: "long",
 		year: "numeric",
@@ -27,7 +36,7 @@ export const EventsCard = ({ event, categories, onClick }) => {
 			overflow="hidden"
 			variant="outline"
 			my={5}
-            minH={"350px"}
+			minH={"350px"}
 			cursor="pointer"
 			_hover={{
 				transform: "scale(1.03)",
@@ -71,13 +80,13 @@ export const EventsCard = ({ event, categories, onClick }) => {
 				<CardFooter>
 					<Text mt="2em">
 						Categories:
-						{event.categoryIds.map((categoryId, index) => {
+						{(event.categoryIds || []).map((categoryId, index) => {
 							const category = categories.find((c) => c.id === categoryId);
 							return (
 								<Tag
 									key={index}
 									variant="outline"
-									colorScheme="teal"
+									colorScheme="purple"
 									ml="0.5em"
 								>
 									{category ? category.name : ""}

@@ -8,26 +8,27 @@ import {
 	Text,
 	InputGroup,
 	InputLeftAddon,
+	useToast,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 
-export const NewEventForm = () => {
+export const NewEventForm = ({ showModal, setShowModal }) => {
+	const [data, setData] = useState([]);
 	const [submitting, setSubmitting] = useState(false);
 	const [lastAddedId, setLastAddedId] = useState(null);
+	const toast = useToast();
 
 	const {
 		register,
-        watch,
-        setValue,
+		setValue,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
 
-
 	const onSubmit = async (data) => {
 		setSubmitting(true);
-        let lastId; 
+		let lastId;
 		let userId;
 		if (data.name) {
 			const usersResponse = await fetch("http://localhost:3000/users");
@@ -52,24 +53,25 @@ export const NewEventForm = () => {
 				userId = userData.id;
 			}
 		}
+        lastId++;
 
-    const selectedCategories = [];
+		// Create an array of categories and add the selected options.
+		const selectedCategories = [];
 		if (data.sports) {
-			selectedCategories.push("1");
+			selectedCategories.push(parseInt("1"));
 		}
 		if (data.games) {
-			selectedCategories.push("2");
+			selectedCategories.push(parseInt("2"));
 		}
 		if (data.relaxation) {
-			selectedCategories.push("3");
+			selectedCategories.push(parseInt("3"));
 		}
-       
-        lastId++;
+
 
 		const formattedData = {
 			id: lastId,
 			createdBy: userId,
-            title: data.title,
+			title: data.title,
 			description: data.description,
 			image: data.image, // Assuming 'img' is a URL
 			categoryIds: selectedCategories,
@@ -88,19 +90,49 @@ export const NewEventForm = () => {
 			});
 			const responseData = await response.json();
 			console.log("Success:", responseData);
-			// setValue("categoryIds", []); // Reset selectedCategories to an empty array
+			setValue("categoryIds", []); // Reset selectedCategories to an empty array
 			setSubmitting(false);
 			setLastAddedId(lastId);
+
+			if (response.ok) {
+				// Fetch the updated data from the server
+				const updatedResponse = await fetch("http://localhost:3000/events");
+				const updatedData = await updatedResponse.json();
+				// Update the data state with the new data
+				setData(updatedData);
+
+				// Show a success toast
+				toast({
+					title: "Event created.",
+					description: "Your activity has been succesfully added!",
+					status: "success",
+					duration: 9000,
+					isClosable: true,
+				});
+
+				// Close the modal
+				setShowModal(false); // Close the modal
+                console.log(showModal);
+
+			}
 		} catch (error) {
 			console.error("Error:", error);
 			setSubmitting(false);
+
+			toast({
+				title: "Error",
+				description: "There was an error creating the event.",
+				status: "error",
+				duration: 9000,
+				isClosable: true,
+			});
 		}
 	};
 
-	const deleteActivity = async (id) => {
-		const url = `http://localhost:3000/events/${id}`; 
-        // const url = `http://localhost:3000/users/${id}`;
-
+	const deleteEvent = async (id) => {
+		const url = `http://localhost:3000/events/${id}`;
+		// const url = `http://localhost:3000/users/${id}`;
+		const toast = useToast();
 
 		try {
 			const response = await fetch(url, {
@@ -110,6 +142,13 @@ export const NewEventForm = () => {
 			if (!response.ok) {
 				throw new Error("Network response was not ok");
 			}
+			toast({
+				title: "Event deleted",
+				description: "Your activity has been succesfully deleted!",
+				status: "success",
+				duration: 9000,
+				isClosable: true,
+			});
 
 			console.log("Object deleted successfully");
 
@@ -119,11 +158,18 @@ export const NewEventForm = () => {
 			// Do something with the updated data
 		} catch (error) {
 			console.error("There was a problem with the DELETE request:", error);
+			toast({
+				title: "Error",
+				description: "There was an error deleting the event.",
+				status: "error",
+				duration: 9000,
+				isClosable: true,
+			});
 		}
 	};
 
 	// 		// Call the function with the ID of the object you want to delete
-			// deleteActivity(5);
+	// deleteEvent(11);
 
 	return (
 		<>
@@ -170,10 +216,10 @@ export const NewEventForm = () => {
 				<FormControl mt={4}>
 					<FormLabel>Start time</FormLabel>
 					<Input
-						{...register("startTime")}
 						placeholder="Select Date and Time"
 						type="datetime-local"
 						name="startTime"
+						{...register("startTime")}
 					/>
 				</FormControl>
 
@@ -189,73 +235,16 @@ export const NewEventForm = () => {
 
 				<FormControl mt={4} mb={4}>
 					<FormLabel>Choose one or more categories</FormLabel>
-					<CheckboxGroup defaultValue={[]} colorScheme="green">
+					<CheckboxGroup colorScheme="green">
 						<p>{errors.categoryIds?.message}</p>
 						<Stack spacing={[1, 5]} direction={["column", "row"]}>
-							<Checkbox
-								{...register("categoryIds")}
-								value="1"
-								name="sports"
-								onChange={(e) => {
-									const selectedCategories = watch("categoryIds") || [];
-									if (e.target.checked) {
-										selectedCategories.push(e.target.value);
-									} else {
-										const index = selectedCategories.indexOf(
-											parseInt(e.target.value)
-										);
-										if (index > -1) {
-											selectedCategories.splice(index, 1);
-										}
-									}
-									console.log(selectedCategories);
-									setValue("categoryIds", selectedCategories);
-								}}
-							>
+							<Checkbox value="1" name="sports" {...register("sports")}>
 								Sports
 							</Checkbox>
-							<Checkbox
-								{...register("categoryIds")}
-								value="2"
-								name="games"
-								onChange={(e) => {
-									const selectedCategories = watch("categoryIds") || [];
-									if (e.target.checked) {
-										selectedCategories.push(e.target.value);
-									} else {
-										const index = selectedCategories.indexOf(
-											parseInt(e.target.value)
-										);
-										if (index > -1) {
-											selectedCategories.splice(index, 1);
-										}
-									}
-									console.log(selectedCategories);
-									setValue("categoryIds", selectedCategories);
-								}}
-							>
+							<Checkbox value="2" name="games" {...register("games")}>
 								Games
 							</Checkbox>
-							<Checkbox
-								{...register("categoryIds")}
-								value="3"
-								name="relaxation"
-								onChange={(e) => {
-									const selectedCategories = watch("categoryIds") || [];
-									if (e.target.checked) {
-										selectedCategories.push(e.target.value);
-									} else {
-										const index = selectedCategories.indexOf(
-											parseInt(e.target.value)
-										);
-										if (index > -1) {
-											selectedCategories.splice(index, 1);
-										}
-									}
-									console.log(selectedCategories);
-									setValue("categoryIds", selectedCategories);
-								}}
-							>
+							<Checkbox value="3" name="relaxation" {...register("relaxation")}>
 								Relaxation
 							</Checkbox>
 						</Stack>
