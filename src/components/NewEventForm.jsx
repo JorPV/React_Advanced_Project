@@ -11,13 +11,15 @@ import {
 	useToast,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { submitData } from "../utils/submitData";
 
-export const NewEventForm = ({ showModal, setShowModal }) => {
+export const NewEventForm = ({ setIsOpen, setEvents }) => {
 	const [data, setData] = useState([]);
 	const [submitting, setSubmitting] = useState(false);
 	const [lastAddedId, setLastAddedId] = useState(null);
 	const toast = useToast();
+	let lastId;
 
 	const {
 		register,
@@ -26,107 +28,32 @@ export const NewEventForm = ({ showModal, setShowModal }) => {
 		formState: { errors },
 	} = useForm();
 
-	const onSubmit = async (data) => {
-		setSubmitting(true);
-		let lastId;
-		let userId;
-		if (data.name) {
-			const usersResponse = await fetch("http://localhost:3000/users");
-			const usersData = await usersResponse.json();
-
-			// Find if the user already exists
-			const existingUser = usersData.find((user) => user.name === data.name);
-			if (existingUser) {
-				userId = existingUser.id;
-			} else {
-				const userResponse = await fetch("http://localhost:3000/users", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						name: data.name,
-						image: data.image,
-					}),
-				});
-				const userData = await userResponse.json();
-				userId = userData.id;
-			}
-		}
-        lastId++;
-
-		// Create an array of categories and add the selected options.
-		const selectedCategories = [];
-		if (data.sports) {
-			selectedCategories.push(parseInt("1"));
-		}
-		if (data.games) {
-			selectedCategories.push(parseInt("2"));
-		}
-		if (data.relaxation) {
-			selectedCategories.push(parseInt("3"));
-		}
-
-
-		const formattedData = {
-			id: lastId,
-			createdBy: userId,
-			title: data.title,
-			description: data.description,
-			image: data.image, // Assuming 'img' is a URL
-			categoryIds: selectedCategories,
-			location: data.location,
-			startTime: data.startTime,
-			endTime: data.endTime,
-		};
-
+	const fetchData = async () => {
 		try {
-			const response = await fetch("http://localhost:3000/events", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(formattedData),
-			});
-			const responseData = await response.json();
-			console.log("Success:", responseData);
-			setValue("categoryIds", []); // Reset selectedCategories to an empty array
-			setSubmitting(false);
-			setLastAddedId(lastId);
-
-			if (response.ok) {
-				// Fetch the updated data from the server
-				const updatedResponse = await fetch("http://localhost:3000/events");
-				const updatedData = await updatedResponse.json();
-				// Update the data state with the new data
-				setData(updatedData);
-
-				// Show a success toast
-				toast({
-					title: "Event created.",
-					description: "Your activity has been succesfully added!",
-					status: "success",
-					duration: 9000,
-					isClosable: true,
-				});
-
-				// Close the modal
-				setShowModal(false); // Close the modal
-                console.log(showModal);
-
-			}
+			const response = await fetch("http://localhost:3000/events");
+			const data = await response.json();
+			setData(data);
 		} catch (error) {
-			console.error("Error:", error);
-			setSubmitting(false);
-
-			toast({
-				title: "Error",
-				description: "There was an error creating the event.",
-				status: "error",
-				duration: 9000,
-				isClosable: true,
-			});
+			console.error("Error fetching data:", error);
 		}
+	};
+
+	useEffect(() => {
+		fetchData();
+	}, []);
+
+  const handleSubmitData = async (data) => {
+		await submitData(
+			data,
+			lastId,
+			setSubmitting,
+			setValue,
+			setLastAddedId,
+			setIsOpen,
+			setEvents,
+			toast,
+			fetchData
+		);
 	};
 
 	const deleteEvent = async (id) => {
@@ -153,14 +80,14 @@ export const NewEventForm = ({ showModal, setShowModal }) => {
 			console.log("Object deleted successfully");
 
 			// You may want to fetch the updated data after the delete request
-			// const updatedData = await fetchEvents();
+			// fetchData();
 
 			// Do something with the updated data
 		} catch (error) {
 			console.error("There was a problem with the DELETE request:", error);
 			toast({
 				title: "Error",
-				description: "There was an error deleting the event.",
+				description: "There was an error deleting the activity.",
 				status: "error",
 				duration: 9000,
 				isClosable: true,
@@ -169,11 +96,11 @@ export const NewEventForm = ({ showModal, setShowModal }) => {
 	};
 
 	// 		// Call the function with the ID of the object you want to delete
-	// deleteEvent(11);
+	// deleteEvent(8);
 
 	return (
 		<>
-			<form onSubmit={handleSubmit(onSubmit)} id="eventForm">
+			<form onSubmit={handleSubmit(handleSubmitData)} id="eventForm">
 				{/* To do: add the isRequired attribute to each form control */}
 				<FormControl>
 					<FormLabel>Name</FormLabel>
@@ -188,7 +115,7 @@ export const NewEventForm = ({ showModal, setShowModal }) => {
 				<FormControl mt={4}>
 					<FormLabel>Activity title</FormLabel>
 					<Input
-						{...register("title", { required: "Title is required" })}
+						{...register("title")}
 						placeholder="The name of the activity"
 						name="title"
 					/>

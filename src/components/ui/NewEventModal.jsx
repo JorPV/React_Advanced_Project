@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
 	Button,
 	Modal,
@@ -11,14 +10,11 @@ import {
 } from "@chakra-ui/react";
 import { NewEventForm } from "../NewEventForm";
 
-export const NewEventModal = ({ isOpen, onClose, onSubmit }) => {
-    const [localShowModal, setLocalShowModal] = useState(false);
+export const NewEventModal = ({ isOpen, onClose, setEvents }) => {
 
 	const handleSubmit = (data) => {
 		console.log(data);
 		// Add your form submission logic here
-		onSubmit(data);
-        setLocalShowModal(false);
 	};
 
 	return (
@@ -30,7 +26,8 @@ export const NewEventModal = ({ isOpen, onClose, onSubmit }) => {
 				<ModalBody pb={6}>
 					<NewEventForm
 						onSubmit={handleSubmit}
-						setShowModal={setLocalShowModal}
+						setIsOpen={onClose}
+						setEvents={setEvents}
 					/>
 				</ModalBody>
 
