@@ -12,13 +12,10 @@ import {
 import { NewEventForm } from "../NewEventForm";
 
 export const NewEventModal = ({ isOpen, onClose, onSubmit }) => {
-    const [localShowModal, setLocalShowModal] = useState(false);
-
 	const handleSubmit = (data) => {
 		console.log(data);
 		// Add your form submission logic here
 		onSubmit(data);
-        setLocalShowModal(false);
 	};
 
 	return (
@@ -30,7 +27,6 @@ export const NewEventModal = ({ isOpen, onClose, onSubmit }) => {
 				<ModalBody pb={6}>
 					<NewEventForm
 						onSubmit={handleSubmit}
-						setShowModal={setLocalShowModal}
 					/>
 				</ModalBody>
 

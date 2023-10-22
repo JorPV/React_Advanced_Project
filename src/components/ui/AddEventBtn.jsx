@@ -1,4 +1,3 @@
-// AddEventBtn.jsx
 import { Button as NewEventBtn } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { NewEventModal } from "./NewEventModal";
@@ -6,14 +5,13 @@ import { NewEventModal } from "./NewEventModal";
 export const AddEventBtn = () => {
 	const [isOpen, setIsOpen] = useState(false);
 
+	const handleOpen = () => {
+		setIsOpen(true);
+	};
 
-const handleOpen = () => {
-	setIsOpen(true);
-};
-
-const handleClose = () => {
-	setIsOpen(false);
-};
+	const handleClose = () => {
+		setIsOpen(false);
+	};
 
 	return (
 		<>
