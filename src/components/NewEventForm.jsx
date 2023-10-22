@@ -15,7 +15,7 @@ import { useCreateEvent } from "../utils/SubmitData";
 
 export const NewEventForm = ({ setShowModal }) => {
 	const { createEvent } = useCreateEvent(); // Using the createEvent function from the useCreateEvent hook
-
+    
 	const {
 		register,
 		setValue,
@@ -129,7 +129,7 @@ export const NewEventForm = ({ setShowModal }) => {
 				<FormControl mt={4}>
 					<FormLabel>Activity title</FormLabel>
 					<Input
-						{...register("title", { required: "Title is required" })}
+						{...register("title")}
 						placeholder="The name of the activity"
 						name="title"
 					/>

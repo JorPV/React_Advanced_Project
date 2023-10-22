@@ -45,7 +45,7 @@ export const EventsPage = () => {
 		<Container maxW="auto" bg="gray.50" centerContent mt="3em">
 			<Box padding="4" bg="gray.50" color="black" w="80%">
 				<Heading>List of activities</Heading>
-				<AddEventBtn />
+				<AddEventBtn setEvents={setEvents} />
 				<div>
 					{events.map((event) => (
 						<Link key={event.id} to={`event/${event.id}`}>
