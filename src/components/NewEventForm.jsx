@@ -15,7 +15,7 @@ import { useCreateEvent } from "../utils/SubmitData";
 
 export const NewEventForm = ({ setShowModal }) => {
 	const { createEvent } = useCreateEvent(); // Using the createEvent function from the useCreateEvent hook
-    
+
 	const {
 		register,
 		setValue,
@@ -66,14 +66,22 @@ export const NewEventForm = ({ setShowModal }) => {
 
 		// Use a default image for if no url image is added
 		if (!data.image) {
-			const defaultImageUrl =
-				"https://i.pinimg.com/736x/3d/2f/af/3d2faf4e3188d34a9fcdc00df59e77b0.jpg";
+			const defaultImageUrls = [
+				"https://www.gstatic.com/webp/gallery/1.jpg",
+				"https://www.gstatic.com/webp/gallery/2.jpg",
+				"https://www.gstatic.com/webp/gallery/4.jpg",
+				"https://www.gstatic.com/webp/gallery/5.jpg",
+			];
+
+			const randomIndex = Math.floor(Math.random() * defaultImageUrls.length);
+			const defaultImageUrl = defaultImageUrls[randomIndex];
 			data.image = defaultImageUrl;
 		}
 
 		// Event object data
 		const eventData = {
-			id: lastId,
+            id: undefined,
+			// id: lastId,
 			createdBy: userId,
 			title: data.title,
 			description: data.description,
@@ -110,7 +118,7 @@ export const NewEventForm = ({ setShowModal }) => {
 	};
 
 	// Call the function with the ID of the object you want to delete
-	// deleteEvent(8);
+	// deleteEvent(7);
 
 	return (
 		<>
@@ -194,14 +202,14 @@ export const NewEventForm = ({ setShowModal }) => {
 
 				<FormControl>
 					<FormLabel>Add a picture:</FormLabel>
-					{/* <input
-						type="file"
-						{...register("img")}
-						accept="image/png, image/jpeg"
-					/> */}
 					<InputGroup size="sm">
 						<InputLeftAddon children="https://" />
-						<Input placeholder="Image url" {...register("image")} />
+						<Input
+							{...register("image")}
+							placeholder="Image url"
+							accept="image/jpg"
+						/>
+						<Text color="tomato">{errors?.name && errors.name.message}</Text>
 					</InputGroup>
 				</FormControl>
 			</form>
