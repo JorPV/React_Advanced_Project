@@ -1,13 +1,20 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
 
 export const EventsContext = createContext();
 
 export const EventsProvider = ({ children }) => {
-	const [eventsContext, setEventsContext] = useState({});
+	const [events, setEvents] = useState([]);
+	// const [categories, setCategories] = useState([]);
+
+	const updateEvents = (data) => {
+		setEvents(data);
+	};
 
 	return (
-		<EventsContext.Provider value={{ eventsContext, setEventsContext }}>
+		<EventsContext.Provider value={{ events, updateEvents }}>
 			{children}
 		</EventsContext.Provider>
 	);
 };
+
+export const useEventContext = () => useContext(EventsContext);

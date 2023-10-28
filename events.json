@@ -69,6 +69,21 @@
       "location": "Shavasana Yoga School",
       "startTime": "2023-03-09T06:00:00.000Z",
       "endTime": "2023-03-09T07:00:00.000Z"
+    },
+    {
+      "createdBy": 3,
+      "title": "Test new event",
+      "description": "Cooking lesson to learn how to make a traditional paella",
+      "image": "https://www.gstatic.com/webp/gallery/1.jpg",
+      "categoryIds": [
+        1,
+        2,
+        3
+      ],
+      "location": "Woonkamer",
+      "startTime": "",
+      "endTime": "",
+      "id": 5
     }
   ],
   "categories": [
