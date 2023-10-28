@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { useToast } from "@chakra-ui/react";
+import { useEventContext } from "../context/EventsDataContext";
 
 export const useCreateEvent = () => {
+	const { updateEvents } = useEventContext();
 	const [submitting, setSubmitting] = useState(false);
 	const [lastAddedId, setLastAddedId] = useState(null);
-	const [data, setData] = useState([]);
+	// const [data, setData] = useState([]);
 	const toast = useToast();
-    let lastId; 
+	let lastId;
 
-	const createEvent = async (eventData, setShowModal, setValue) => {
+	const createEvent = async (eventData, setIsOpen, setValue) => {
 		setSubmitting(true);
 
 		try {
@@ -26,12 +28,6 @@ export const useCreateEvent = () => {
 			setSubmitting(false);
 
 			if (response.ok) {
-				// Fetch the updated data from the server
-				const updatedResponse = await fetch("http://localhost:3000/events");
-				const updatedData = await updatedResponse.json();
-				// Update the data state with the new data
-				setData(updatedData);
-
 				// Show a success toast
 				toast({
 					title: "Event created.",
@@ -40,6 +36,14 @@ export const useCreateEvent = () => {
 					duration: 9000,
 					isClosable: true,
 				});
+
+				// Call updateEvents to update the events context
+				updateEvents(responseData);
+
+				// Close the modal after 2 seconds
+				setTimeout(() => {
+					setIsOpen(false);
+				}, 2000);
 			}
 		} catch (error) {
 			console.error("Error:", error);
@@ -55,7 +59,5 @@ export const useCreateEvent = () => {
 		}
 	};
 
-	return { submitting, lastAddedId, data, createEvent };
+	return { submitting, lastAddedId, createEvent };
 };
-
-

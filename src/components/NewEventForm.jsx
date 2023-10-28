@@ -13,8 +13,8 @@ import {
 import { useForm } from "react-hook-form";
 import { useCreateEvent } from "../utils/SubmitData";
 
-export const NewEventForm = ({ setShowModal }) => {
-	const { createEvent } = useCreateEvent(); // Using the createEvent function from the useCreateEvent hook
+export const NewEventForm = ({ setIsOpen, setEvents }) => {
+	const { createEvent, updateEvents } = useCreateEvent(); // Using the createEvent function from the useCreateEvent hook
 
 	const {
 		register,
@@ -92,8 +92,18 @@ export const NewEventForm = ({ setShowModal }) => {
 		};
 
 		// Call the createEvent function from the useCreateEvent hook
-		await createEvent(eventData, setShowModal, setValue);
+		const addEvent = await createEvent(eventData, setIsOpen, setValue);
+		// Call the updateEvents function here to update the context data
+		if (addEvent) {
+			const updatedResponse = await fetch("http://localhost:3000/events");
+			const updatedData = await updatedResponse.json();
+
+			// Call the updateEvents function here to update the context data
+			updateEvents(updatedData);
+		}
 	};
+
+
 
 	const deleteEvent = async (id) => {
 		const url = `http://localhost:3000/events/${id}`;

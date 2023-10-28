@@ -4,10 +4,9 @@ export const EventsContext = createContext();
 
 export const EventsProvider = ({ children }) => {
 	const [events, setEvents] = useState([]);
-	// const [categories, setCategories] = useState([]);
 
-	const updateEvents = (data) => {
-		setEvents(data);
+	const updateEvents = (newEvents) => {
+		setEvents(newEvents);
 	};
 
 	return (

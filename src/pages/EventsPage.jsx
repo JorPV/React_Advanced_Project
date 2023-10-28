@@ -33,7 +33,7 @@ export const EventsPage = () => {
 		} else {
 			fetchEvents();
 		}
-	}, [initialEvents, updateEvents]);
+	}, [initialEvents, updateEvents, eventsData]);
 
 	useEffect(() => {
 		const fetchCategories = async () => {

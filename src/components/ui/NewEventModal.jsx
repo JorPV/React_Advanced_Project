@@ -10,10 +10,9 @@ import {
 } from "@chakra-ui/react";
 import { NewEventForm } from "../NewEventForm";
 
-export const NewEventModal = ({ isOpen, onClose, onSubmit }) => {
+export const NewEventModal = ({ isOpen, onClose, onSubmit, setEvents }) => {
+
 	const handleSubmit = (data) => {
-		console.log(data);
-		// Add your form submission logic here
 		onSubmit(data);
 	};
 
@@ -26,6 +25,8 @@ export const NewEventModal = ({ isOpen, onClose, onSubmit }) => {
 				<ModalBody pb={6}>
 					<NewEventForm
 						onSubmit={handleSubmit}
+						setIsOpen={onClose}
+						setEvents={setEvents}
 					/>
 				</ModalBody>
 

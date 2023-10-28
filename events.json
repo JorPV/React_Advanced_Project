@@ -72,18 +72,25 @@
     },
     {
       "createdBy": 3,
-      "title": "Test new event",
-      "description": "Cooking lesson to learn how to make a traditional paella",
-      "image": "https://www.gstatic.com/webp/gallery/1.jpg",
-      "categoryIds": [
-        1,
-        2,
-        3
-      ],
-      "location": "Woonkamer",
+      "title": "Test Modal close ",
+      "description": "Piano les",
+      "image": "https://www.gstatic.com/webp/gallery/2.jpg",
+      "categoryIds": [],
+      "location": "",
       "startTime": "",
       "endTime": "",
       "id": 5
+    },
+    {
+      "createdBy": 3,
+      "title": "etads",
+      "description": "",
+      "image": "https://www.gstatic.com/webp/gallery/2.jpg",
+      "categoryIds": [],
+      "location": "",
+      "startTime": "",
+      "endTime": "",
+      "id": 6
     }
   ],
   "categories": [
