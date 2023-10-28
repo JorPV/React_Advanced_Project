@@ -11,7 +11,7 @@ import {
 	// useToast,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { useCreateEvent } from "../utils/SubmitData";
+import { useCreateEvent } from "../services/submitData";
 
 export const NewEventForm = ({ setIsOpen, setEvents }) => {
 	const { createEvent, updateEvents } = useCreateEvent(); // Using the createEvent function from the useCreateEvent hook

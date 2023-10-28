@@ -4,6 +4,7 @@ import { Link, useLoaderData } from "react-router-dom";
 import { EventsCard } from "../components/ui/EventsCard";
 import { AddEventBtn } from "../components/ui/AddEventBtn";
 import { useEventContext } from "../context/EventsDataContext";
+import { SearchInput } from "../components/ui/SearchInput";
 
 export const loader = async () => {
 	const events = await fetch("http://localhost:3000/events");
@@ -16,6 +17,7 @@ export const EventsPage = () => {
 	const [eventsData, setEventsData] = useState([]);
 	const [categories, setCategories] = useState([]);
 	const { events: initialEvents } = useLoaderData();
+	const [searchText, setSearchText] = useState(""); // Initialize searchText state
 
 	const fetchEvents = async () => {
 		try {
@@ -47,13 +49,34 @@ export const EventsPage = () => {
 	if (!eventsData || eventsData.length === 0) {
 		return <div>Loading...</div>;
 	} else {
+		// Filter events based on the search text
+		const filteredEvents = eventsData.filter((event) =>
+			event.title.toLowerCase().includes(searchText.toLowerCase())
+		);
+
 		return (
 			<Container maxW="auto" bg="gray.50" centerContent mt="3em">
 				<Box padding="4" bg="gray.50" color="black" w="80%">
 					<Heading>List of activities</Heading>
 					<AddEventBtn setEvents={fetchEvents} />
-					<div>
+					{/* <div>
 						{eventsData.map((event) => (
+							<Link key={event.id} to={`event/${event.id}`}>
+								<EventsCard
+									event={event}
+									categories={categories}
+									onClick={() => setSelectedActivity(event)}
+								></EventsCard>
+							</Link>
+						))}
+					</div> */}
+					{/* Pass the value and onChange props to the SearchInput component */}
+					<SearchInput
+						value={searchText}
+						onChange={(e) => setSearchText(e.target.value)}
+					/>
+					<div>
+						{filteredEvents.map((event) => (
 							<Link key={event.id} to={`event/${event.id}`}>
 								<EventsCard
 									event={event}
