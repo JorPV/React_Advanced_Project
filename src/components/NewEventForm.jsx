@@ -44,7 +44,7 @@ export const NewEventForm = ({ setShowModal }) => {
 					},
 					body: JSON.stringify({
 						name: data.name,
-						image: data.image,
+						image: "https://www.gstatic.com/webp/gallery3/2.png",
 					}),
 				});
 				const userData = await userResponse.json();
@@ -80,8 +80,7 @@ export const NewEventForm = ({ setShowModal }) => {
 
 		// Event object data
 		const eventData = {
-            id: undefined,
-			// id: lastId,
+			id: lastId,
 			createdBy: userId,
 			title: data.title,
 			description: data.description,
@@ -118,7 +117,7 @@ export const NewEventForm = ({ setShowModal }) => {
 	};
 
 	// Call the function with the ID of the object you want to delete
-	// deleteEvent(7);
+	// deleteEvent(5);
 
 	return (
 		<>
