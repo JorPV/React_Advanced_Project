@@ -1,19 +1,23 @@
 import { Link } from "react-router-dom";
-import { HStack, Box, Flex, Center } from "@chakra-ui/react";
+import { Box, Flex, Center, Text } from "@chakra-ui/react";
 
 export const Navigation = () => {
 	return (
-		<Box bg="pink.50" h={{ md: "3em", base: "2em" }} boxShadow="2xl">
-			<Flex alignItems="center" justifyContent="space-around">
+		<Box bg="white" h={{ md: "4em", base: "3em" }} boxShadow="2xl" position={"sticky"} top={0} zIndex={1}>
+			<Flex ml="11em" h="full" justifyContent="start" gap="9">
 				<Center>
-					<nav>
-						<Link to="/">All activities</Link>
-					</nav>
+					<Text color="blue.600">
+						<nav>
+							<Link to="/">All activities</Link>
+						</nav>
+					</Text>
 				</Center>
 				<Center>
-					<nav>
-						<Link to="/event/1">EventPagina</Link>
-					</nav>
+					<Text color="blue.600">
+						<nav>
+							<Link to="/event/1">EventPagina</Link>
+						</nav>
+					</Text>
 				</Center>
 			</Flex>
 		</Box>

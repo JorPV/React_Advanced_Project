@@ -13,10 +13,9 @@ export const loader = async () => {
 };
 
 export const EventsPage = () => {
-	const { events, updateEvents } = useEventContext();
+	const { events, updateEvents, categories } = useEventContext();
 	const [selectedActivity, setSelectedActivity] = useState(null);
 	const [eventsData, setEventsData] = useState([]);
-	const [categories, setCategories] = useState([]);
 	const { events: initialEvents } = useLoaderData();
 	const [searchText, setSearchText] = useState(""); // Initialize searchText state
 	const [selectedCategory, setSelectedCategory] = useState(null); // Initialize selectedCategory state
@@ -39,14 +38,14 @@ export const EventsPage = () => {
 		}
 	}, [initialEvents, updateEvents, eventsData]);
 
-	useEffect(() => {
-		const fetchCategories = async () => {
-			const response = await fetch("http://localhost:3000/categories");
-			const data = await response.json();
-			setCategories(data);
-		};
-		fetchCategories();
-	}, []);
+	// useEffect(() => {
+	// 	const fetchCategories = async () => {
+	// 		const response = await fetch("http://localhost:3000/categories");
+	// 		const data = await response.json();
+	// 		setCategories(data);
+	// 	};
+	// 	fetchCategories();
+	// }, []);
 
 	const filterEvents = (events, category, searchText) => {
 		let filteredEvents = events;
