@@ -3,21 +3,28 @@ import { Box, Flex, Center, Text } from "@chakra-ui/react";
 
 export const Navigation = () => {
 	return (
-		<Box bg="white" h={{ md: "4em", base: "3em" }} boxShadow="2xl" position={"sticky"} top={0} zIndex={1}>
+		<Box
+			bg="white"
+			h={{ md: "4em", base: "3em" }}
+			boxShadow="2xl"
+			position={"sticky"}
+			top={0}
+			zIndex={1}
+		>
 			<Flex ml="11em" h="full" justifyContent="start" gap="9">
 				<Center>
-					<Text color="blue.600">
-						<nav>
+					<nav>
+						<Text color="blue.600">
 							<Link to="/">All activities</Link>
-						</nav>
-					</Text>
+						</Text>
+					</nav>
 				</Center>
 				<Center>
-					<Text color="blue.600">
-						<nav>
+					<nav>
+						<Text color="blue.600">
 							<Link to="/event/1">EventPagina</Link>
-						</nav>
-					</Text>
+						</Text>
+					</nav>
 				</Center>
 			</Flex>
 		</Box>

@@ -4,6 +4,7 @@ import {
 	Card,
 	Image,
 	Stack,
+	Flex,
 	CardBody,
 	Text,
 	Tag,
@@ -18,7 +19,7 @@ export const EventsCard = ({ event, categories, onClick }) => {
 	useEffect(() => {
 		setCurrentEvent(event);
 	}, [event]);
-    
+
 	const timeOptions = {
 		weekday: "long",
 		year: "numeric",
@@ -51,40 +52,49 @@ export const EventsCard = ({ event, categories, onClick }) => {
 				alt="Activity image"
 			/>
 
-			<Stack>
+			<Stack pl={7}>
 				<CardBody>
-					<Heading size="lg" color={"teal.500"}>
+					<Heading size="xl" color={"teal.500"}>
 						{event.title}
 					</Heading>
-					<Text fontSize="md" color="blue.700" py="2">
+
+					<Text fontSize="lg" color="gray.600" py="2">
 						{event.description}
 					</Text>
-					<div>
-						Starts:
-						<Text as="b" ml={1}>
-							<span>
-								{new Date(event.startTime).toLocaleString("en-US", timeOptions)}
-							</span>
-						</Text>
-					</div>
-					<div>
-						Ends:
-						<Text as="b" ml={1}>
-							<span>
-								{new Date(event.endTime).toLocaleString("en-US", timeOptions)}
-							</span>
-						</Text>
-					</div>
+					<Flex h="full" direction="column" justifyContent="space-evenly">
+						<div>
+							<Text fontWeight="semibold">Location: </Text>
+							{event.location}
+						</div>
+						<div>
+							<Text fontWeight="semibold">
+								Starts:
+								<Text fontWeight="normal" ml={1} display="inline">
+									{new Date(event.startTime).toLocaleString(
+										"en-US",
+										timeOptions
+									)}
+								</Text>
+							</Text>
+							<Text fontWeight="semibold">
+								Ends:
+								<Text fontWeight="normal" ml={1} display="inline">
+									{new Date(event.endTime).toLocaleString("en-US", timeOptions)}
+								</Text>
+							</Text>
+						</div>
+					</Flex>
 				</CardBody>
 
 				<CardFooter>
-					<Text mt="2em">
+					<Text fontWeight="semibold" mt="2em">
 						Categories:
 						{(event.categoryIds || []).map((categoryId, index) => {
 							const category = categories.find((c) => c.id === categoryId);
 							return (
-								<Tag
+								<Tag 
 									key={index}
+                                    size="md"
 									variant="outline"
 									colorScheme="purple"
 									ml="0.5em"

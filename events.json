@@ -14,6 +14,11 @@
       "name": "Jordi Me",
       "image": "https://www.gstatic.com/webp/gallery3/2.png",
       "id": 3
+    },
+    {
+      "name": "Meta Tax",
+      "image": "https://www.gstatic.com/webp/gallery3/2.png",
+      "id": 4
     }
   ],
   "events": [
@@ -71,16 +76,17 @@
       "endTime": "2023-03-09T07:00:00.000Z"
     },
     {
-      "createdBy": 3,
-      "title": "My activity",
+      "createdBy": 4,
+      "title": "Activity van Meta",
       "description": "Test of new event",
-      "image": "https://www.gstatic.com/webp/gallery/1.jpg",
+      "image": "https://www.gstatic.com/webp/gallery/2.jpg",
       "categoryIds": [
-        3
+        1,
+        2
       ],
-      "location": "In my house",
-      "startTime": "2023-11-04T12:03",
-      "endTime": "2023-11-04T12:04",
+      "location": "Wijchen",
+      "startTime": "2023-11-04T16:06",
+      "endTime": "2023-11-04T16:07",
       "id": 5
     }
   ],
