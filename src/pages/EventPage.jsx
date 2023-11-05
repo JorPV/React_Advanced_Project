@@ -9,15 +9,14 @@ import {
 	Spacer,
 	Avatar,
 	Tag,
-	useToast,
 } from "@chakra-ui/react";
 import { Button as DeleteButton } from "@chakra-ui/react";
 import { Button as EditButton } from "@chakra-ui/react";
 import { useLoaderData } from "react-router-dom";
 import { useEventContext } from "../context/EventsDataContext";
-import { deleteEvent } from "../services/deleteData";
 import { useState } from "react";
 import { NewEventModal } from "../components/ui/NewEventModal";
+import { ConfirmationModal } from "../components/ui/ConfirmationModal";
 
 export const loader = async ({ params }) => {
 	const event = await fetch(`http://localhost:3000/events/${params.eventId}`);
@@ -29,34 +28,16 @@ export const loader = async ({ params }) => {
 export const EventPage = () => {
 	const { event } = useLoaderData();
 	const { categories, users } = useEventContext();
-	const toast = useToast();
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isNewEventModalOpen, setIsNewEventModalOpen] = useState(false);
+    const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
+			useState(false);
 
 	const handleEditClick = () => {
-		setIsModalOpen(true);
+		setIsNewEventModalOpen(true);
 	};
 
-	const handleDelete = async () => {
-		try {
-			await deleteEvent(event.id);
-			toast({
-				title: "Event deleted",
-				description: "Your activity has been succesfully deleted!",
-				status: "success",
-				duration: 9000,
-				isClosable: true,
-			});
-			console.log("Object deleted successfully");
-		} catch (error) {
-			console.error("Error deleting event:", error);
-			toast({
-				title: "Error",
-				description: "There was an error deleting the activity.",
-				status: "error",
-				duration: 9000,
-				isClosable: true,
-			});
-		}
+	const handleDeleteClick = () => {
+		setIsConfirmationModalOpen(true);
 	};
 
 	const timeOptions = {
@@ -154,13 +135,23 @@ export const EventPage = () => {
 				<EditButton size="lg" bg="#cc6bb7" onClick={handleEditClick}>
 					Edit event
 				</EditButton>
-				<DeleteButton size="lg" bg="red" color="white" onClick={handleDelete}>
+				<DeleteButton
+					size="lg"
+					bg="red"
+					color="white"
+					onClick={handleDeleteClick}
+				>
 					Delete event
 				</DeleteButton>
 			</Flex>
 			<NewEventModal
-				isOpen={isModalOpen}
-				onClose={() => setIsModalOpen(false)}
+				isOpen={isNewEventModalOpen}
+				onClose={() => setIsNewEventModalOpen(false)}
+			/>
+			<ConfirmationModal
+				isOpen={isConfirmationModalOpen}
+				onClose={() => setIsConfirmationModalOpen(false)}
+				eventId={event.id}
 			/>
 		</Container>
 	);

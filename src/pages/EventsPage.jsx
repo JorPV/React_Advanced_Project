@@ -1,4 +1,4 @@
-import { Container, Box, Heading } from "@chakra-ui/react";
+import { Container, Box, Heading, Flex } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { EventsCard } from "../components/ui/EventsCard";
@@ -13,7 +13,7 @@ export const loader = async () => {
 };
 
 export const EventsPage = () => {
-	const { events, updateEvents, categories } = useEventContext();
+	const { updateEvents, categories } = useEventContext();
 	const [selectedActivity, setSelectedActivity] = useState(null);
 	const [eventsData, setEventsData] = useState([]);
 	const { events: initialEvents } = useLoaderData();
@@ -37,15 +37,6 @@ export const EventsPage = () => {
 			fetchEvents();
 		}
 	}, [initialEvents, updateEvents, eventsData]);
-
-	// useEffect(() => {
-	// 	const fetchCategories = async () => {
-	// 		const response = await fetch("http://localhost:3000/categories");
-	// 		const data = await response.json();
-	// 		setCategories(data);
-	// 	};
-	// 	fetchCategories();
-	// }, []);
 
 	const filterEvents = (events, category, searchText) => {
 		let filteredEvents = events;
@@ -76,22 +67,23 @@ if (
 	const filteredEvents = filterEvents(eventsData, selectedCategory, searchText);
 
 	return (
-		<Container maxW="auto" bg="gray.50" centerContent mt="3em">
+		<Container maxW="auto" bg="gray.50" centerContent mt="9">
 			<Box padding="4" bg="gray.50" color="black" w="80%">
-				<Heading>List of activities</Heading>
-				<AddEventBtn setEvents={fetchEvents} />
-				{/* Pass the value and onChange props to the SearchInput component */}
-				<SearchInput
-					value={searchText}
-					onChange={(e) => setSearchText(e.target.value)}
-				/>
-				{/* Add a conditional check to ensure categories is defined before rendering */}
-				{categories && categories.length > 0 ? (
-					<FilterSelect
-						categories={categories}
-						setSelectedCategory={setSelectedCategory}
+				<Heading mb="12">List of activities</Heading>
+				<Flex gap="12" justifyContent="space-between">
+					{/* Pass the value and onChange props to the SearchInput component */}
+					<SearchInput
+						value={searchText}
+						onChange={(e) => setSearchText(e.target.value)}
 					/>
-				) : null}
+					{/* Add a conditional check to ensure categories is defined before rendering */}
+					{categories && categories.length > 0 ? (
+						<FilterSelect
+							categories={categories}
+							setSelectedCategory={setSelectedCategory}
+						/>
+					) : null}
+				</Flex>
 				<div>
 					{filteredEvents.map((event) => (
 						<Link key={event.id} to={`event/${event.id}`}>
@@ -103,6 +95,7 @@ if (
 						</Link>
 					))}
 				</div>
+				<AddEventBtn setEvents={fetchEvents} />
 			</Box>
 		</Container>
 	);

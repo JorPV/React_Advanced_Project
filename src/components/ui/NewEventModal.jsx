@@ -12,8 +12,19 @@ import { NewEventForm } from "../NewEventForm";
 
 export const NewEventModal = ({ isOpen, onClose, onSubmit, setEvents }) => {
 
-	const handleSubmit = (data) => {
-		onSubmit(data);
+
+	const handleSubmit = async (data) => {
+		try {
+			const response = await onSubmit(data); // Assuming onSubmit is an async function that makes the POST request
+			if (response.ok) {
+				setEvents(); // Update or refresh the data here
+				onClose(); // Close the modal if the request was successful
+			} else {
+				// Handle error if the response is not okay
+			}
+		} catch (error) {
+			// Handle any errors that occur during the POST request
+		} 
 	};
 
 	return (
@@ -31,10 +42,17 @@ export const NewEventModal = ({ isOpen, onClose, onSubmit, setEvents }) => {
 				</ModalBody>
 
 				<ModalFooter>
-					<Button type="submit" form="eventForm" colorScheme="cyan" mr={3}>
+					<Button
+						type="submit"
+						form="eventForm"
+						colorScheme="cyan"
+						mr={3}
+					>
 						Submit
 					</Button>
-					<Button onClick={onClose}>Cancel</Button>
+					<Button onClick={onClose} >
+						Cancel
+					</Button>
 				</ModalFooter>
 			</ModalContent>
 		</Modal>

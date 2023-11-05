@@ -5,16 +5,14 @@ import { useEventContext } from "../context/EventsDataContext";
 export const useCreateEvent = () => {
 	const { updateEvents } = useEventContext();
 	const [submitting, setSubmitting] = useState(false);
-	const [lastAddedId, setLastAddedId] = useState(null);
 	const toast = useToast();
-	let lastId;
 
-	const createEvent = async (eventData, setIsOpen, setValue) => {
+	const updateEvent = async (eventId, eventData, setIsOpen) => {
 		setSubmitting(true);
 
 		try {
-			const response = await fetch("http://localhost:3000/events", {
-				method: "POST",
+			const response = await fetch(`http://localhost:3000/events/${eventId}`, {
+				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
 				},
@@ -22,23 +20,21 @@ export const useCreateEvent = () => {
 			});
 			const responseData = await response.json();
 			console.log("Success:", responseData);
-			setLastAddedId(lastId);
-			setValue("categoryIds", []); // Reset selectedCategories to an empty array
 			setSubmitting(false);
 
 			if (response.ok) {
-				// Call updateEvents to update the events context
-				updateEvents(responseData);
-
 				// Show a success toast
 				toast({
-					title: "Event created.",
-					description: "Your activity has been successfully added!",
+					title: "Event updated.",
+					description: "Your event has been successfully updated!",
 					status: "success",
 					duration: 9000,
 					isClosable: true,
 				});
-                
+
+				// Call updateEvents to update the events context
+				updateEvents(responseData);
+
 				// Close the modal after 2 seconds
 				setTimeout(() => {
 					setIsOpen(false);
@@ -50,7 +46,7 @@ export const useCreateEvent = () => {
 
 			toast({
 				title: "Error",
-				description: "There was an error creating the event.",
+				description: "There was an error updating the event.",
 				status: "error",
 				duration: 9000,
 				isClosable: true,
@@ -58,5 +54,5 @@ export const useCreateEvent = () => {
 		}
 	};
 
-	return { submitting, lastAddedId, createEvent };
+	return { submitting, updateEvent };
 };

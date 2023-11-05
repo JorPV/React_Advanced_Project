@@ -103,32 +103,6 @@ export const NewEventForm = ({ setIsOpen, setEvents }) => {
 		}
 	};
 
-
-
-	const deleteEvent = async (id) => {
-		const url = `http://localhost:3000/events/${id}`;
-		// const url = `http://localhost:3000/users/${id}`;
-
-		try {
-			const response = await fetch(url, {
-				method: "DELETE",
-			});
-
-			if (!response.ok) {
-				throw new Error("Network response was not ok");
-			}
-
-			console.log("Object deleted successfully");
-
-			// Do something with the updated data
-		} catch (error) {
-			console.error("There was a problem with the DELETE request:", error);
-		}
-	};
-
-	// Call the function with the ID of the object you want to delete
-	// deleteEvent(5);
-
 	return (
 		<>
 			<form onSubmit={handleSubmit(submitData)} id="eventForm">

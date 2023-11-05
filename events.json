@@ -74,20 +74,6 @@
       "location": "Shavasana Yoga School",
       "startTime": "2023-03-09T06:00:00.000Z",
       "endTime": "2023-03-09T07:00:00.000Z"
-    },
-    {
-      "createdBy": 4,
-      "title": "Activity van Meta",
-      "description": "Test of new event",
-      "image": "https://www.gstatic.com/webp/gallery/2.jpg",
-      "categoryIds": [
-        1,
-        2
-      ],
-      "location": "Wijchen",
-      "startTime": "2023-11-04T16:06",
-      "endTime": "2023-11-04T16:07",
-      "id": 5
     }
   ],
   "categories": [
