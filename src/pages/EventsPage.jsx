@@ -56,48 +56,54 @@ export const EventsPage = () => {
 		return filteredEvents;
 	};
 
-if (
-	!eventsData ||
-	eventsData.length === 0 ||
-	!categories ||
-	categories.length === 0
-) {
-	return <div>Loading...</div>;
-} else {
-	const filteredEvents = filterEvents(eventsData, selectedCategory, searchText);
+	if (
+		!eventsData ||
+		eventsData.length === 0 ||
+		!categories ||
+		categories.length === 0
+	) {
+		return <div>Loading...</div>;
+	} else {
+		const filteredEvents = filterEvents(
+			eventsData,
+			selectedCategory,
+			searchText
+		);
 
-	return (
-		<Container maxW="auto" bg="gray.50" centerContent mt="9">
-			<Box padding="4" bg="gray.50" color="black" w="80%">
-				<Heading mb="12">List of activities</Heading>
-				<Flex gap="12" justifyContent="space-between">
-					{/* Pass the value and onChange props to the SearchInput component */}
-					<SearchInput
-						value={searchText}
-						onChange={(e) => setSearchText(e.target.value)}
-					/>
-					{/* Add a conditional check to ensure categories is defined before rendering */}
-					{categories && categories.length > 0 ? (
-						<FilterSelect
-							categories={categories}
-							setSelectedCategory={setSelectedCategory}
+		return (
+			<Container maxW="auto" bg="gray.50" centerContent mt="9">
+				<Box padding="4" bg="gray.50" color="black" w="80%">
+					<Flex justifyContent="space-between">
+						<Heading mb="12">List of activities</Heading>
+						<AddEventBtn setEvents={fetchEvents} />
+					</Flex>
+					<Flex gap="12" justifyContent="space-between">
+						{/* Pass the value and onChange props to the SearchInput component */}
+						<SearchInput
+							value={searchText}
+							onChange={(e) => setSearchText(e.target.value)}
 						/>
-					) : null}
-				</Flex>
-				<div>
-					{filteredEvents.map((event) => (
-						<Link key={event.id} to={`event/${event.id}`}>
-							<EventsCard
-								event={event}
+						{/* Add a conditional check to ensure categories is defined before rendering */}
+						{categories && categories.length > 0 ? (
+							<FilterSelect
 								categories={categories}
-								onClick={() => setSelectedActivity(event)}
-							></EventsCard>
-						</Link>
-					))}
-				</div>
-				<AddEventBtn setEvents={fetchEvents} />
-			</Box>
-		</Container>
-	);
-}
+								setSelectedCategory={setSelectedCategory}
+							/>
+						) : null}
+					</Flex>
+					<div>
+						{filteredEvents.map((event) => (
+							<Link key={event.id} to={`event/${event.id}`}>
+								<EventsCard
+									event={event}
+									categories={categories}
+									onClick={() => setSelectedActivity(event)}
+								></EventsCard>
+							</Link>
+						))}
+					</div>
+				</Box>
+			</Container>
+		);
+	}
 };

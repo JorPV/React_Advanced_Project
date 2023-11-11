@@ -2,21 +2,21 @@ import { useState } from "react";
 import { useToast } from "@chakra-ui/react";
 import { useEventContext } from "../context/EventsDataContext";
 
-export const useCreateEvent = () => {
+export const useEditEvent = () => {
 	const { updateEvents } = useEventContext();
 	const [submitting, setSubmitting] = useState(false);
 	const toast = useToast();
 
-	const updateEvent = async (eventId, eventData, setIsOpen) => {
+	const updateData = async (url, data) => {
 		setSubmitting(true);
 
 		try {
-			const response = await fetch(`http://localhost:3000/events/${eventId}`, {
-				method: "PUT",
+			const response = await fetch(url, {
+				method: "PATCH",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify(eventData),
+				body: JSON.stringify(data),
 			});
 			const responseData = await response.json();
 			console.log("Success:", responseData);
@@ -25,28 +25,24 @@ export const useCreateEvent = () => {
 			if (response.ok) {
 				// Show a success toast
 				toast({
-					title: "Event updated.",
-					description: "Your event has been successfully updated!",
+					title: "Data updated.",
+					description: "Your data has been successfully updated!",
 					status: "success",
 					duration: 9000,
 					isClosable: true,
 				});
 
-				// Call updateEvents to update the events context
+				// Call updateEvents to update the context
 				updateEvents(responseData);
-
-				// Close the modal after 2 seconds
-				setTimeout(() => {
-					setIsOpen(false);
-				}, 2000);
 			}
 		} catch (error) {
 			console.error("Error:", error);
 			setSubmitting(false);
 
+			// Show an error toast
 			toast({
 				title: "Error",
-				description: "There was an error updating the event.",
+				description: "There was an error updating the data.",
 				status: "error",
 				duration: 9000,
 				isClosable: true,
@@ -54,5 +50,5 @@ export const useCreateEvent = () => {
 		}
 	};
 
-	return { submitting, updateEvent };
+	return { submitting, updateData };
 };

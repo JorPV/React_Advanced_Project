@@ -10,12 +10,13 @@ import {
 	Avatar,
 	Tag,
 } from "@chakra-ui/react";
+import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { Button as DeleteButton } from "@chakra-ui/react";
 import { Button as EditButton } from "@chakra-ui/react";
 import { useLoaderData } from "react-router-dom";
 import { useEventContext } from "../context/EventsDataContext";
 import { useState } from "react";
-import { NewEventModal } from "../components/ui/NewEventModal";
+import { EditEventModal } from "../components/ui/EditEventModal";
 import { ConfirmationModal } from "../components/ui/ConfirmationModal";
 
 export const loader = async ({ params }) => {
@@ -28,12 +29,12 @@ export const loader = async ({ params }) => {
 export const EventPage = () => {
 	const { event } = useLoaderData();
 	const { categories, users } = useEventContext();
-	const [isNewEventModalOpen, setIsNewEventModalOpen] = useState(false);
+	const [isEditEventModalOpen, setIsEditEventModalOpen] = useState(false);
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
 			useState(false);
 
 	const handleEditClick = () => {
-		setIsNewEventModalOpen(true);
+		setIsEditEventModalOpen(true);
 	};
 
 	const handleDeleteClick = () => {
@@ -59,7 +60,7 @@ export const EventPage = () => {
 	return (
 		<Container maxW="75%">
 			<Spacer m={8} />
-			<Center boxShadow="md" rounded="md" w="full">
+			<Center boxShadow="lg" rounded="md" w="full">
 				<Box m="8">
 					<Flex justifyContent={"space-between"}>
 						<div>
@@ -87,7 +88,7 @@ export const EventPage = () => {
 					<Spacer h={9} />
 					<Image
 						borderRadius="3%"
-						boxSize="auto"
+						boxSize="50%"
 						src={event.image}
 						alt="Event image"
 					/>
@@ -132,21 +133,28 @@ export const EventPage = () => {
 				</Box>
 			</Center>
 			<Flex my="8" justifyContent="right" gap="4">
-				<EditButton size="lg" bg="#cc6bb7" onClick={handleEditClick}>
-					Edit event
+				<EditButton
+					size="lg"
+					colorScheme="pink"
+					color="white"
+					leftIcon={<EditIcon />}
+					onClick={handleEditClick}
+				>
+					Edit activity
 				</EditButton>
 				<DeleteButton
 					size="lg"
 					bg="red"
 					color="white"
+                    leftIcon={<DeleteIcon />}
 					onClick={handleDeleteClick}
 				>
-					Delete event
+					Delete activity
 				</DeleteButton>
 			</Flex>
-			<NewEventModal
-				isOpen={isNewEventModalOpen}
-				onClose={() => setIsNewEventModalOpen(false)}
+			<EditEventModal
+				isOpen={isEditEventModalOpen}
+				onClose={() => setIsEditEventModalOpen(false)}
 			/>
 			<ConfirmationModal
 				isOpen={isConfirmationModalOpen}

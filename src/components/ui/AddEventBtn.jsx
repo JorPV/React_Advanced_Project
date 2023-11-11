@@ -15,7 +15,12 @@ export const AddEventBtn = () => {
 
 	return (
 		<>
-			<NewEventBtn variant="solid" colorScheme={"purple"} onClick={handleOpen}>
+			<NewEventBtn
+				variant="solid"
+				colorScheme={"purple"}
+				onClick={handleOpen}
+				mt="1em"
+			>
 				Add new activity
 			</NewEventBtn>
 			<NewEventModal isOpen={isOpen} onClose={handleClose} />

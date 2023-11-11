@@ -10,7 +10,7 @@ export const FilterSelect = ({ categories, setSelectedCategory }) => {
 				onChange={(e) => setSelectedCategory(parseInt(e.target.value))}
 			>
 				{categories.map((category) => (
-					<option key={category.id} value={category.id}>
+					<option key={category.id} value={category.id} >
 						{category.name}
 					</option>
 				))}

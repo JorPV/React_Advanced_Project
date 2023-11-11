@@ -42,17 +42,10 @@ export const NewEventModal = ({ isOpen, onClose, onSubmit, setEvents }) => {
 				</ModalBody>
 
 				<ModalFooter>
-					<Button
-						type="submit"
-						form="eventForm"
-						colorScheme="cyan"
-						mr={3}
-					>
-						Submit
+					<Button type="submit" form="eventForm" colorScheme="whatsapp" mr={3}>
+						Create activity
 					</Button>
-					<Button onClick={onClose} >
-						Cancel
-					</Button>
+					<Button onClick={onClose}>Cancel</Button>
 				</ModalFooter>
 			</ModalContent>
 		</Modal>
