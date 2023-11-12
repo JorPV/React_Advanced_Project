@@ -10,13 +10,10 @@ import {
 	InputLeftAddon,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { useEditEvent } from "../services/editData";
 import { useParams } from "react-router-dom";
 
-export const EditEventForm = ({ handleUpdate, setIsOpen, setEvents }) => {
+export const EditEventForm = ({ handleUpdate, setIsOpen }) => {
 	const { eventId } = useParams();
-
-	const { submitting, updateData } = useEditEvent();
 
 	const {
 		register,
@@ -25,20 +22,35 @@ export const EditEventForm = ({ handleUpdate, setIsOpen, setEvents }) => {
 	} = useForm();
 
 	const editData = async (data) => {
+		// Create an array of categories and set a default image URL
+		const selectedCategories = [];
+		if (data.sports) {
+			selectedCategories.push(parseInt("1"));
+		}
+		if (data.games) {
+			selectedCategories.push(parseInt("2"));
+		}
+		if (data.relaxation) {
+			selectedCategories.push(parseInt("3"));
+		}
+
 		try {
 			// Construct the PATCH request body
 			const patchData = {
-				title: data.title,
-				description: data.description,
-				image: data.image,
-				location: data.location,
-				startTime: data.startTime,
-				endTime: data.endTime,
+				...(data.title && { title: data.title }),
+				...(data.description && { description: data.description }),
+				...(data.image && { image: data.image }),
+				...(data.location && { location: data.location }),
+				...(data.startTime && { startTime: data.startTime }),
+				...(data.endTime && { endTime: data.endTime }),
+				...(selectedCategories.length > 0 && {
+					categoryIds: selectedCategories,
+				}),
 			};
 
 			// Use the updateData hook from useEditEvent
 			await handleUpdate(eventId, patchData);
-
+			// Update local state or handle any additional logic
 			setIsOpen(false);
 		} catch (error) {
 			console.error("Error:", error);
@@ -50,11 +62,11 @@ export const EditEventForm = ({ handleUpdate, setIsOpen, setEvents }) => {
 		<>
 			<form onSubmit={handleSubmit(editData)} id="updateForm">
 				{/* To do: add the isRequired attribute to each form control */}
-				<FormControl>
+				{/* <FormControl>
 					<FormLabel>Name</FormLabel>
 					<Input {...register("name")} placeholder="Change name" name="name" />
 					<Text color="tomato">{errors?.name && errors.name.message}</Text>
-				</FormControl>
+				</FormControl> */}
 
 				<FormControl mt={4}>
 					<FormLabel>Activity title</FormLabel>

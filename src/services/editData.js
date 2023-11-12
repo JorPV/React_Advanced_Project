@@ -7,11 +7,12 @@ export const useEditEvent = () => {
 	const [submitting, setSubmitting] = useState(false);
 	const toast = useToast();
 
-	const updateData = async (url, data) => {
+	const updateData = async (eventId, data) => {
+		console.log("Updating data:", data, "Event ID:", eventId);
 		setSubmitting(true);
 
 		try {
-			const response = await fetch(url, {
+			const response = await fetch(`http://localhost:3000/events/${eventId}`, {
 				method: "PATCH",
 				headers: {
 					"Content-Type": "application/json",
@@ -34,6 +35,15 @@ export const useEditEvent = () => {
 
 				// Call updateEvents to update the context
 				updateEvents(responseData);
+			} else {
+				// Show an error toast
+				toast({
+					title: "Error",
+					description: "There was an error updating the data.",
+					status: "error",
+					duration: 9000,
+					isClosable: true,
+				});
 			}
 		} catch (error) {
 			console.error("Error:", error);
@@ -50,5 +60,5 @@ export const useEditEvent = () => {
 		}
 	};
 
-	return { submitting, updateData };
+	return { submitting, updateEvent: updateData };
 };

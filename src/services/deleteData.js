@@ -12,4 +12,4 @@ export const deleteEvent = async (id) => {
 };
 
 // Call the function with the ID of the object you want to delete
-// deleteEvent(8);
+// deleteEvent(5);
