@@ -30,8 +30,7 @@ export const EventPage = () => {
 	const { event } = useLoaderData();
 	const { categories, users } = useEventContext();
 	const [isEditEventModalOpen, setIsEditEventModalOpen] = useState(false);
-    const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
-			useState(false);
+	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
 	const handleEditClick = () => {
 		setIsEditEventModalOpen(true);
@@ -64,56 +63,93 @@ export const EventPage = () => {
 				<Box m="8">
 					<Flex justifyContent={"space-between"}>
 						<div>
-							<Heading mb="3" color={"teal.500"}>
+							<Heading
+								mb="3"
+								color={"teal.500"}
+								as="h2"
+								size={{ base: "lg", md: "xl", lg: "2xl" }}
+							>
 								{event.title}
 							</Heading>
-							<Text fontSize="xl" mb="2">
+							<Text
+								fontSize={{ base: "md", md: "md", lg: "xl" }}
+								mb="2"
+								as="em"
+								color="gray.600"
+							>
 								{event.description}
 							</Text>
 						</div>
 						<Flex justifyContent="center" alignItems="center">
 							<div>
-								<Text fontSize="xl" mr="5">
+								<Text
+									fontSize={{ base: "sm", md: "md", lg: "xl" }}
+									mr="5"
+									as="b"
+								>
 									Created by:
 								</Text>
-								<Text>{createdByUser.name}</Text>
+								<Text fontSize={{ base: "sm", md: "md", lg: "xl" }}>
+									{createdByUser.name}
+								</Text>
 							</div>
 							<Avatar
-								size="xl"
+								size={{ base: "lg", md: "xl", lg: "xl" }}
 								name={createdByUser.name}
 								src={createdByUser.image}
 							/>
 						</Flex>
 					</Flex>
 					<Spacer h={9} />
-					<Image
-						borderRadius="3%"
-						boxSize="50%"
-						src={event.image}
-						alt="Event image"
-					/>
-					<Spacer mt="7" />
-					<Text as="b">Location: </Text>
-					{event.location}
-					<Flex direction="row" justifyContent="space-between">
-						<div>
-							<Text mt="7">
-								<Text as="b">Starts: </Text>
-								<span>
-									{new Date(event.startTime).toLocaleString(
-										"en-US",
-										timeOptions
-									)}
-								</span>
-							</Text>
-							<Text mt="2">
-								<Text as="b">Finishes: </Text>
-								<span>
-									{new Date(event.endTime).toLocaleString("en-US", timeOptions)}
-								</span>
-							</Text>
-						</div>
-						<Text mt="2em" as="b" alignSelf="end">
+					<Flex direction={{ base: "column", md: "column", lg: "row" }}>
+						<Image
+							borderRadius="3%"
+							boxSize={{ base: "100%", md: "50%", lg: "40%" }}
+							src={event.image}
+							alt="Event image"
+							marginRight={8}
+						/>
+						<Spacer mt="7" />
+						<Flex direction="column">
+							<div>
+								<Text as="b" fontSize={{ base: "md", md: "md", lg: "xl" }}>
+									Location:
+								</Text>
+								<Text fontSize={{ base: "md", md: "md", lg: "xl" }}>
+									{event.location}
+								</Text>
+							</div>
+							<div>
+								<Text mt="7">
+									<Text as="b" fontSize={{ base: "md", md: "md", lg: "xl" }}>
+										Starts:{" "}
+									</Text>
+									<span>
+										{new Date(event.startTime).toLocaleString(
+											"en-US",
+											timeOptions
+										)}
+									</span>
+								</Text>
+								<Text mt="2">
+									<Text as="b" fontSize={{ base: "", md: "md", lg: "xl" }}>
+										Finishes:{" "}
+									</Text>
+									<span>
+										{new Date(event.endTime).toLocaleString(
+											"en-US",
+											timeOptions
+										)}
+									</span>
+								</Text>
+							</div>
+						</Flex>
+						<Text
+							mt="2em"
+							as="b"
+							alignSelf="end"
+							fontSize={{ base: "md", md: "md", lg: "lg" }}
+						>
 							Categories:
 							{(event.categoryIds || []).map((categoryId, index) => {
 								const category = categories.find((c) => c.id === categoryId);
@@ -121,6 +157,7 @@ export const EventPage = () => {
 									<Tag
 										key={index}
 										variant="outline"
+										size={{ base: "sm", md: "md", lg: "lg" }}
 										colorScheme="purple"
 										ml="0.5em"
 									>
@@ -134,22 +171,24 @@ export const EventPage = () => {
 			</Center>
 			<Flex my="8" justifyContent="right" gap="4">
 				<EditButton
-					size="lg"
 					colorScheme="pink"
 					color="white"
 					leftIcon={<EditIcon />}
 					onClick={handleEditClick}
 				>
-					Edit activity
+					<Text fontSize={{ base: "md", md: "md", lg: "lg" }}>
+						Edit activity
+					</Text>
 				</EditButton>
 				<DeleteButton
-					size="lg"
 					bg="red"
 					color="white"
-                    leftIcon={<DeleteIcon />}
+					leftIcon={<DeleteIcon />}
 					onClick={handleDeleteClick}
 				>
-					Delete activity
+					<Text fontSize={{ base: "md", md: "md", lg: "lg" }}>
+						Delete activity
+					</Text>
 				</DeleteButton>
 			</Flex>
 			<EditEventModal

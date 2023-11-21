@@ -71,10 +71,17 @@ export const EventsPage = () => {
 		);
 
 		return (
-			<Container maxW="auto" bg="gray.50" centerContent mt="9">
+			<Container maxW="auto" bg="gray.50" centerContent mt="">
 				<Box padding="4" bg="gray.50" color="black" w="80%">
-					<Flex justifyContent="space-between">
-						<Heading mb="12">List of activities</Heading>
+					<Flex justifyContent="space-between" alignItems="center">
+						<Heading
+							as="h2"
+							size={{ base: "lg", md: "2xl", lg: "3xl" }}
+							my="12"
+							color="#0d445e"
+						>
+							List of all activities
+						</Heading>
 						<AddEventBtn setEvents={fetchEvents} />
 					</Flex>
 					<Flex gap="12" justifyContent="space-between">

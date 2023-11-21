@@ -29,7 +29,9 @@
       "description": "Bounce around with your friends",
       "image": "https://i.pinimg.com/736x/3d/2f/af/3d2faf4e3188d34a9fcdc00df59e77b0.jpg",
       "categoryIds": [
-        2
+        1,
+        2,
+        3
       ],
       "location": "My back yard",
       "startTime": "2023-03-10T18:00",
@@ -76,17 +78,16 @@
       "endTime": "2023-03-09T07:00:00.000Z"
     },
     {
-      "createdBy": 3,
-      "title": "Update test 11:08",
-      "description": "Only change description",
+      "createdBy": 1,
+      "title": "Piano ",
+      "description": "Singing lessons",
       "image": "https://www.gstatic.com/webp/gallery/4.jpg",
       "categoryIds": [
-        2,
         3
       ],
       "location": "In my house",
-      "startTime": "",
-      "endTime": "",
+      "startTime": "2023-12-09T09:36",
+      "endTime": "2023-12-10T09:36",
       "id": 5
     }
   ],

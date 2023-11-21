@@ -54,31 +54,50 @@ export const EventsCard = ({ event, categories, onClick }) => {
 
 			<Stack pl={7}>
 				<CardBody>
-					<Heading size="xl" color={"teal.500"}>
+					<Heading size="xl" color="teal.500" mb="2">
 						{event.title}
 					</Heading>
 
-					<Text fontSize="lg" color="gray.600" py="2">
+					<Text as="em" fontSize="lg" color="gray.600">
 						{event.description}
 					</Text>
-					<Flex h="full" direction="column" justifyContent="space-evenly">
+					<Flex
+						h="full"
+						direction="column"
+						justifyContent="space-evenly"
+						mt={{ base: "0", md: "", lg: "xl" }}
+					>
 						<div>
-							<Text fontWeight="semibold">Location: </Text>
-							{event.location}
+							<Text
+								fontWeight="semibold"
+								as="u"
+								fontSize={{ base: "md", md: "lg", lg: "19px" }}
+							>
+								Location:
+							</Text>
+							<Text fontSize={{ base: "md", md: "lg", lg: "19px" }}>
+								{event.location}
+							</Text>
 						</div>
 						<div>
-							<Text fontWeight="semibold">
+							<Text
+								fontWeight="semibold"
+								fontSize={{ base: "md", md: "lg", lg: "18px" }}
+							>
 								Starts:
-								<Text fontWeight="normal" ml={1} display="inline">
+								<Text fontWeight="thin" ml={1} display="inline">
 									{new Date(event.startTime).toLocaleString(
 										"en-US",
 										timeOptions
 									)}
 								</Text>
 							</Text>
-							<Text fontWeight="semibold">
+							<Text
+								fontWeight="semibold"
+								fontSize={{ base: "md", md: "lg", lg: "18px" }}
+							>
 								Ends:
-								<Text fontWeight="normal" ml={1} display="inline">
+								<Text fontWeight="thin" ml={1} display="inline">
 									{new Date(event.endTime).toLocaleString("en-US", timeOptions)}
 								</Text>
 							</Text>
@@ -87,14 +106,19 @@ export const EventsCard = ({ event, categories, onClick }) => {
 				</CardBody>
 
 				<CardFooter>
-					<Text fontWeight="semibold" mt="2em">
+					<Text
+						fontWeight="semibold"
+						fontSize={{ base: "md", md: "lg", lg: "19px" }}
+						as="u"
+						mt="8"
+					>
 						Categories:
 						{(event.categoryIds || []).map((categoryId, index) => {
 							const category = categories.find((c) => c.id === categoryId);
 							return (
-								<Tag 
+								<Tag
 									key={index}
-                                    size="md"
+									size={{ base: "md", md: "md", lg: "lg" }}
 									variant="outline"
 									colorScheme="purple"
 									ml="0.5em"
