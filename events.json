@@ -19,6 +19,11 @@
       "name": "Meta Tax",
       "image": "https://www.gstatic.com/webp/gallery3/2.png",
       "id": 4
+    },
+    {
+      "name": "This is a new activity",
+      "image": "https://www.gstatic.com/webp/gallery3/2.png",
+      "id": 5
     }
   ],
   "events": [
@@ -76,19 +81,6 @@
       "location": "Shavasana Yoga School",
       "startTime": "2023-03-09T06:00:00.000Z",
       "endTime": "2023-03-09T07:00:00.000Z"
-    },
-    {
-      "createdBy": 1,
-      "title": "Piano ",
-      "description": "Singing lessons",
-      "image": "https://www.gstatic.com/webp/gallery/4.jpg",
-      "categoryIds": [
-        3
-      ],
-      "location": "In my house",
-      "startTime": "2023-12-09T09:36",
-      "endTime": "2023-12-10T09:36",
-      "id": 5
     }
   ],
   "categories": [

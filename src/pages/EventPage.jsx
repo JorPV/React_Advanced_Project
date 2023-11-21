@@ -17,7 +17,7 @@ import { useLoaderData } from "react-router-dom";
 import { useEventContext } from "../context/EventsDataContext";
 import { useState } from "react";
 import { EditEventModal } from "../components/ui/EditEventModal";
-import { ConfirmationModal } from "../components/ui/ConfirmationModal";
+import { ConfirmDeleteModal } from "../components/ui/ConfirmationModal";
 
 export const loader = async ({ params }) => {
 	const event = await fetch(`http://localhost:3000/events/${params.eventId}`);
@@ -58,8 +58,13 @@ export const EventPage = () => {
 
 	return (
 		<Container maxW="75%">
-			<Spacer m={8} />
-			<Center boxShadow="lg" rounded="md" w="full">
+			<Center
+				boxShadow="lg"
+				rounded="md"
+				w="full"
+				bg="gray.50"
+				mt={{ base: "10", lg: "20" }}
+			>
 				<Box m="8">
 					<Flex justifyContent={"space-between"}>
 						<div>
@@ -89,7 +94,7 @@ export const EventPage = () => {
 								>
 									Created by:
 								</Text>
-								<Text fontSize={{ base: "sm", md: "md", lg: "xl" }}>
+								<Text fontSize={{ base: "sm", md: "md", lg: "lg" }}>
 									{createdByUser.name}
 								</Text>
 							</div>
@@ -101,21 +106,24 @@ export const EventPage = () => {
 						</Flex>
 					</Flex>
 					<Spacer h={9} />
-					<Flex direction={{ base: "column", md: "column", lg: "row" }}>
+					<Flex
+						direction={{ base: "column", md: "column", lg: "row" }}
+						justifyContent={"between"}
+					>
 						<Image
 							borderRadius="3%"
 							boxSize={{ base: "100%", md: "50%", lg: "40%" }}
 							src={event.image}
 							alt="Event image"
 							marginRight={8}
+							mb={{ base: "5", lg: "0" }}
 						/>
-						<Spacer mt="7" />
-						<Flex direction="column">
+						<Flex direction="column" w="full">
 							<div>
 								<Text as="b" fontSize={{ base: "md", md: "md", lg: "xl" }}>
 									Location:
 								</Text>
-								<Text fontSize={{ base: "md", md: "md", lg: "xl" }}>
+								<Text fontSize={{ base: "sm", md: "md", lg: "lg" }}>
 									{event.location}
 								</Text>
 							</div>
@@ -124,55 +132,58 @@ export const EventPage = () => {
 									<Text as="b" fontSize={{ base: "md", md: "md", lg: "xl" }}>
 										Starts:{" "}
 									</Text>
-									<span>
+									<Text fontSize={{ base: "sm", md: "md", lg: "lg" }}>
 										{new Date(event.startTime).toLocaleString(
 											"en-US",
 											timeOptions
 										)}
-									</span>
+									</Text>
 								</Text>
 								<Text mt="2">
-									<Text as="b" fontSize={{ base: "", md: "md", lg: "xl" }}>
+									<Text as="b" fontSize={{ base: "md", md: "md", lg: "xl" }}>
 										Finishes:{" "}
 									</Text>
-									<span>
+									<Text fontSize={{ base: "sm", md: "md", lg: "lg" }}>
 										{new Date(event.endTime).toLocaleString(
 											"en-US",
 											timeOptions
 										)}
-									</span>
+									</Text>
 								</Text>
 							</div>
 						</Flex>
-						<Text
-							mt="2em"
-							as="b"
-							alignSelf="end"
-							fontSize={{ base: "md", md: "md", lg: "lg" }}
-						>
-							Categories:
-							{(event.categoryIds || []).map((categoryId, index) => {
-								const category = categories.find((c) => c.id === categoryId);
-								return (
-									<Tag
-										key={index}
-										variant="outline"
-										size={{ base: "sm", md: "md", lg: "lg" }}
-										colorScheme="purple"
-										ml="0.5em"
-									>
-										{category ? category.name : ""}
-									</Tag>
-								);
-							})}
-						</Text>
+						<Flex justifyContent="end" alignContent="center" w="full">
+							<Text
+								mt="2em"
+								as="b"
+								alignSelf="end"
+								fontSize={{ base: "md", md: "md", lg: "lg" }}
+							>
+								Categories:
+								{(event.categoryIds || []).map((categoryId, index) => {
+									const category = categories.find((c) => c.id === categoryId);
+									return (
+										<Tag
+											key={index}
+											variant="outline"
+											size={{ base: "sm", md: "md", lg: "lg" }}
+											colorScheme="purple"
+											ml="0.5em"
+										>
+											{category ? category.name : ""}
+										</Tag>
+									);
+								})}
+							</Text>
+						</Flex>
 					</Flex>
 				</Box>
 			</Center>
+
 			<Flex my="8" justifyContent="right" gap="4">
 				<EditButton
 					colorScheme="pink"
-					color="white"
+					size={{ base: "md", md: "md", lg: "lg" }}
 					leftIcon={<EditIcon />}
 					onClick={handleEditClick}
 				>
@@ -181,8 +192,8 @@ export const EventPage = () => {
 					</Text>
 				</EditButton>
 				<DeleteButton
-					bg="red"
-					color="white"
+					colorScheme="red"
+					size={{ base: "md", md: "md", lg: "lg" }}
 					leftIcon={<DeleteIcon />}
 					onClick={handleDeleteClick}
 				>
@@ -195,7 +206,7 @@ export const EventPage = () => {
 				isOpen={isEditEventModalOpen}
 				onClose={() => setIsEditEventModalOpen(false)}
 			/>
-			<ConfirmationModal
+			<ConfirmDeleteModal
 				isOpen={isConfirmationModalOpen}
 				onClose={() => setIsConfirmationModalOpen(false)}
 				eventId={event.id}

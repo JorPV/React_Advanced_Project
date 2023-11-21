@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Box, Flex, Center, Text } from "@chakra-ui/react";
+import { Box, Flex, Center, Text, Spacer } from "@chakra-ui/react";
 
 export const Navigation = () => {
 	return (
@@ -11,29 +11,22 @@ export const Navigation = () => {
 			top={0}
 			zIndex={1}
 		>
-			<Flex ml="11em" h="full" justifyContent="start" gap="9">
+			<Flex h="full" justifyContent="start">
+                <Spacer maxW={16}/>
 				<Center>
 					<nav>
 						<Text
 							color="blue.600"
 							as="b"
-							fontSize={{ base: "md", md: "md", lg: "xl" }}
+							fontSize={{ base: "md", md: "lg", lg: "xl" }}
 						>
-							<Link to="/">List of ctivities</Link>
+							<Link to="/">List of activities</Link>
 						</Text>
 					</nav>
 				</Center>
-				{/* <Center>
-					<nav>
-						<Text
-							color="blue.600"
-							as="b"
-							fontSize={{ base: "md", md: "md", lg: "xl" }}
-						>
-							<Link to="/event/1">Activity page</Link>
-						</Text>
-					</nav>
-				</Center> */}
+	
+							{/* <Link to="/event/1">Activity page</Link> */}
+				
 			</Flex>
 		</Box>
 	);

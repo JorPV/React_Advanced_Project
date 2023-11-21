@@ -12,11 +12,11 @@ import {
 	useToast,
 } from "@chakra-ui/react";
 import { deleteEvent } from "../../services/deleteData";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export const ConfirmationModal = ({ isOpen, onClose, eventId }) => {
+export const ConfirmDeleteModal = ({ isOpen, onClose, eventId }) => {
 	const toast = useToast();
-	// const navToEvents = useNavigate();
+	const navToEvents = useNavigate();
 
 	const handleDelete = async () => {
 		try {
@@ -30,7 +30,7 @@ export const ConfirmationModal = ({ isOpen, onClose, eventId }) => {
 			});
 			setTimeout(() => {
 				onClose();
-				// navToEvents.push("/");
+				navToEvents("/");
 			}, 1000);
 		} catch (error) {
 			toast({
@@ -59,7 +59,7 @@ export const ConfirmationModal = ({ isOpen, onClose, eventId }) => {
 					</ModalBody>
 					<ModalFooter>
 						<Flex gap="5">
-							<Button variant="outline" onClick={handleDelete}>
+							<Button variant="outline" color="red.600" onClick={handleDelete}>
 								Yes, delete!
 							</Button>
 							<Button onClick={onClose}>Cancel</Button>

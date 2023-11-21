@@ -52,7 +52,7 @@ export const EventsCard = ({ event, categories, onClick }) => {
 				alt="Activity image"
 			/>
 
-			<Stack pl={7}>
+			<Stack>
 				<CardBody>
 					<Heading size="xl" color="teal.500" mb="2">
 						{event.title}
@@ -65,7 +65,6 @@ export const EventsCard = ({ event, categories, onClick }) => {
 						h="full"
 						direction="column"
 						justifyContent="space-evenly"
-						mt={{ base: "0", md: "", lg: "xl" }}
 					>
 						<div>
 							<Text
@@ -105,12 +104,12 @@ export const EventsCard = ({ event, categories, onClick }) => {
 					</Flex>
 				</CardBody>
 
-				<CardFooter>
+				<CardFooter h="105px">
+                    <Flex flexDirection="column" justifyContent="end" alignItems="end" >
 					<Text
 						fontWeight="semibold"
 						fontSize={{ base: "md", md: "lg", lg: "19px" }}
 						as="u"
-						mt="8"
 					>
 						Categories:
 						{(event.categoryIds || []).map((categoryId, index) => {
@@ -128,6 +127,7 @@ export const EventsCard = ({ event, categories, onClick }) => {
 							);
 						})}
 					</Text>
+                    </Flex>
 				</CardFooter>
 			</Stack>
 		</Card>

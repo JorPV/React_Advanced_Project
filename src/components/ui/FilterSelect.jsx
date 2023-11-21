@@ -6,11 +6,12 @@ export const FilterSelect = ({ categories, setSelectedCategory }) => {
 		<>
 			<Select
 				variant="flushed"
+				fontSize={{ base: "md", md: "lg", lg: "lg" }}
 				placeholder="Filter by category"
 				onChange={(e) => setSelectedCategory(parseInt(e.target.value))}
 			>
 				{categories.map((category) => (
-					<option key={category.id} value={category.id} >
+					<option key={category.id} value={category.id}>
 						{category.name}
 					</option>
 				))}

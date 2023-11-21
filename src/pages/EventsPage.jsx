@@ -1,4 +1,4 @@
-import { Container, Box, Heading, Flex } from "@chakra-ui/react";
+import { Container, Box, Heading, Flex, Grid } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { EventsCard } from "../components/ui/EventsCard";
@@ -71,7 +71,7 @@ export const EventsPage = () => {
 		);
 
 		return (
-			<Container maxW="auto" bg="gray.50" centerContent mt="">
+			<Container maxW="auto" bg="gray.50" h="full" centerContent>
 				<Box padding="4" bg="gray.50" color="black" w="80%">
 					<Flex justifyContent="space-between" alignItems="center">
 						<Heading
@@ -85,20 +85,18 @@ export const EventsPage = () => {
 						<AddEventBtn setEvents={fetchEvents} />
 					</Flex>
 					<Flex gap="12" justifyContent="space-between">
-						{/* Pass the value and onChange props to the SearchInput component */}
-						<SearchInput
-							value={searchText}
-							onChange={(e) => setSearchText(e.target.value)}
-						/>
-						{/* Add a conditional check to ensure categories is defined before rendering */}
 						{categories && categories.length > 0 ? (
 							<FilterSelect
 								categories={categories}
 								setSelectedCategory={setSelectedCategory}
 							/>
 						) : null}
+						<SearchInput
+							value={searchText}
+							onChange={(e) => setSearchText(e.target.value)}
+						/>
 					</Flex>
-					<div>
+					<Grid templateColumns={{ base:"repeat(1, 1fr)", lg:"repeat(2, 1fr)" }} gap={6}>
 						{filteredEvents.map((event) => (
 							<Link key={event.id} to={`event/${event.id}`}>
 								<EventsCard
@@ -108,7 +106,7 @@ export const EventsPage = () => {
 								></EventsCard>
 							</Link>
 						))}
-					</div>
+					</Grid>
 				</Box>
 			</Container>
 		);

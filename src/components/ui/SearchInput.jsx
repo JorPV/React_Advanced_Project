@@ -12,6 +12,7 @@ export const SearchInput = ({ value, onChange }) => {
 					variant="outline"
 					type="text"
 					placeholder="Search activities by title"
+					fontSize={{ base: "md", md: "lg", lg: "lg" }}
 					bg={"white"}
 					value={value}
 					onChange={onChange}
