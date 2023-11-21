@@ -62,7 +62,7 @@ export const EventsPage = () => {
 		!categories ||
 		categories.length === 0
 	) {
-		return <div>Loading...</div>;
+		return <div style={{display:"flex", justifyContent:"center", marginTop:"10rem"}}><h1 style={{fontSize:"42px"}}>Loading...</h1></div>;
 	} else {
 		const filteredEvents = filterEvents(
 			eventsData,

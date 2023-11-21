@@ -8,13 +8,12 @@ import {
 	Text,
 	InputGroup,
 	InputLeftAddon,
-	// useToast,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useCreateEvent } from "../services/submitData";
 
 export const NewEventForm = ({ setIsOpen }) => {
-	const { createEvent, updateEvents } = useCreateEvent(); // Using the createEvent function from the useCreateEvent hook
+	const { createEvent, updateEvents } = useCreateEvent(); // custom useCreateEvent hook
 
 	const {
 		register,
@@ -24,7 +23,6 @@ export const NewEventForm = ({ setIsOpen }) => {
 	} = useForm();
 
 	const submitData = async (data) => {
-		// Initialize the variable
 		let lastId;
 
 		// Check if the user exists or create a new user
@@ -93,12 +91,9 @@ export const NewEventForm = ({ setIsOpen }) => {
 
 		// Call the createEvent function from the useCreateEvent hook
 		const addEvent = await createEvent(eventData, setIsOpen, setValue);
-		// Call the updateEvents function here to update the context data
 		if (addEvent) {
 			const updatedResponse = await fetch("http://localhost:3000/events");
 			const updatedData = await updatedResponse.json();
-
-			// Call the updateEvents function here to update the context data
 			updateEvents(updatedData);
 		}
 	};
@@ -123,8 +118,8 @@ export const NewEventForm = ({ setIsOpen }) => {
 						{...register("title")}
 						placeholder="The name of the activity"
 						name="title"
+						isRequired
 					/>
-					<Text color="tomato">{errors?.name && errors.name.message}</Text>
 				</FormControl>
 
 				<FormControl mt={4}>
@@ -133,6 +128,7 @@ export const NewEventForm = ({ setIsOpen }) => {
 						{...register("description")}
 						placeholder="Brief description"
 						name="description"
+						isRequired
 					/>
 				</FormControl>
 
@@ -142,6 +138,7 @@ export const NewEventForm = ({ setIsOpen }) => {
 						{...register("location")}
 						placeholder="Where will the activity take place"
 						name="location"
+						isRequired
 					/>
 				</FormControl>
 
@@ -152,6 +149,7 @@ export const NewEventForm = ({ setIsOpen }) => {
 						type="datetime-local"
 						name="startTime"
 						{...register("startTime")}
+						isRequired
 					/>
 				</FormControl>
 
@@ -162,6 +160,7 @@ export const NewEventForm = ({ setIsOpen }) => {
 						{...register("endTime")}
 						placeholder="Select Date and Time"
 						type="datetime-local"
+						isRequired
 					/>
 				</FormControl>
 
@@ -192,7 +191,6 @@ export const NewEventForm = ({ setIsOpen }) => {
 							placeholder="Image url"
 							accept="image/jpg"
 						/>
-						<Text color="tomato">{errors?.name && errors.name.message}</Text>
 					</InputGroup>
 				</FormControl>
 			</form>

@@ -11,15 +11,17 @@ import {
 import { CheckIcon } from "@chakra-ui/icons";
 import { EditEventForm } from "../EditEventForm";
 import { useEditEvent } from "../../services/editData";
+import { useState } from "react";
 
-export const EditEventModal = ({ isOpen, onClose }) => {
+export const EditEventModal = ({ isOpen, onClose, initialEventData }) => {
 	const { updateEvent } = useEditEvent();
+    const [ updatedEventData, setUpdatedEventData ] = useState(initialEventData);
 
 	const handleUpdate = async (eventId, data) => {
-        // console.log("handleUpdate called!", eventId, data);
 		try {
 			await updateEvent(eventId, data);
-			onClose(); // Close the modal if the request was successful
+            setUpdatedEventData(updatedData);
+			onClose();
 		} catch (error) {
 			console.error("Error during handleUpdate:", error);
 		}
@@ -36,6 +38,7 @@ export const EditEventModal = ({ isOpen, onClose }) => {
 						handleUpdate={handleUpdate}
 						setIsOpen={onClose}
 						updateEvent={updateEvent}
+						initialEventData={initialEventData}
 					/>
 				</ModalBody>
 
