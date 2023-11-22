@@ -19,11 +19,6 @@
       "name": "Meta Tax",
       "image": "https://www.gstatic.com/webp/gallery3/2.png",
       "id": 4
-    },
-    {
-      "name": "This is a new activity",
-      "image": "https://www.gstatic.com/webp/gallery3/2.png",
-      "id": 5
     }
   ],
   "events": [
@@ -96,15 +91,69 @@
       "id": 5
     },
     {
-      "createdBy": 1,
-      "title": "Another test",
-      "description": "Ukele & guitar lessons",
-      "image": "https://www.gstatic.com/webp/gallery/4.jpg",
+      "createdBy": 3,
+      "title": "One more event",
+      "description": "This is a test",
+      "image": "https://www.gstatic.com/webp/gallery/1.jpg",
       "categoryIds": [],
-      "location": "Somewhere",
-      "startTime": "2023-11-21T16:01",
-      "endTime": "2023-11-21T17:01",
-      "id": 6
+      "location": "Woonkamer",
+      "startTime": "2023-11-21T16:59",
+      "endTime": "2023-11-21T17:59",
+      "id": 8
+    },
+    {
+      "createdBy": 3,
+      "title": "Last TEST",
+      "description": "This is a test",
+      "image": "https://www.gstatic.com/webp/gallery/5.jpg",
+      "categoryIds": [
+        1,
+        3
+      ],
+      "location": "Woonkamer",
+      "startTime": "2023-12-02T18:17",
+      "endTime": "2023-11-21T18:21",
+      "id": 9
+    },
+    {
+      "createdBy": 4,
+      "title": "New event",
+      "description": "Another Test",
+      "image": "https://www.gstatic.com/webp/gallery/4.jpg",
+      "categoryIds": [
+        2,
+        3
+      ],
+      "location": "dresden",
+      "startTime": "2023-11-22T11:33",
+      "endTime": "2023-11-22T11:36",
+      "id": 10
+    },
+    {
+      "createdBy": 2,
+      "title": "Jane event",
+      "description": "This is a test",
+      "image": "https://www.gstatic.com/webp/gallery/5.jpg",
+      "categoryIds": [
+        2
+      ],
+      "location": "In my house",
+      "startTime": "2023-11-22T12:05",
+      "endTime": "2023-11-22T13:05",
+      "id": 11
+    },
+    {
+      "createdBy": 3,
+      "title": "Another event",
+      "description": "Singing lessons",
+      "image": "https://www.gstatic.com/webp/gallery/1.jpg",
+      "categoryIds": [
+        2
+      ],
+      "location": "Woonkamer",
+      "startTime": "2023-11-22T12:26",
+      "endTime": "2023-11-22T13:26",
+      "id": 12
     }
   ],
   "categories": [

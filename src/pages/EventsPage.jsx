@@ -1,4 +1,4 @@
-import { Container, Box, Heading, Flex, Grid } from "@chakra-ui/react";
+import { Container, Box, Heading, Flex, Grid, Spinner } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { EventsCard } from "../components/ui/EventsCard";
@@ -13,30 +13,31 @@ export const loader = async () => {
 };
 
 export const EventsPage = () => {
-	const { updateEvents, categories } = useEventContext();
+	const { categories } = useEventContext();
 	const [selectedActivity, setSelectedActivity] = useState(null);
-	const [eventsData, setEventsData] = useState([]);
+	const [events, setEvents] = useState([]);
 	const { events: initialEvents } = useLoaderData();
 	const [searchText, setSearchText] = useState(""); // Initialize searchText state
-	const [selectedCategory, setSelectedCategory] = useState(null); // Initialize selectedCategory state
+	const [selectedCategory, setSelectedCategory] = useState(null); // Initialize categoryFilter state
 
 	const fetchEvents = async () => {
 		try {
 			const response = await fetch("http://localhost:3000/events");
 			const data = await response.json();
-			setEventsData(data); // Update the local events data
+			setEvents(data); // Update the events data
 		} catch (error) {
 			console.error("Error fetching events:", error);
+			return <div>Error fetching events. Please try again later.</div>;
 		}
 	};
 
 	useEffect(() => {
 		if (initialEvents) {
-			setEventsData(initialEvents);
+			setEvents(initialEvents);
 		} else {
 			fetchEvents();
 		}
-	}, [initialEvents, updateEvents, eventsData]);
+	}, [initialEvents, setEvents]);
 
 	const filterEvents = (events, category, searchText) => {
 		let filteredEvents = events;
@@ -57,15 +58,26 @@ export const EventsPage = () => {
 	};
 
 	if (
-		!eventsData ||
-		eventsData.length === 0 ||
-		!categories ||
-		categories.length === 0
+		!events ||
+		events.length === 0 
+		// !categories ||
+		// categories.length === 0
 	) {
-		return <div style={{display:"flex", justifyContent:"center", marginTop:"10rem"}}><h1 style={{fontSize:"42px"}}>Loading...</h1></div>;
+		return (
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "center",
+					marginTop: "10rem",
+				}}
+			>
+				<Spinner size="lg" m="4"/>
+				<h1 style={{ fontSize: "42px" }}>Loading...</h1>
+			</div>
+		);
 	} else {
 		const filteredEvents = filterEvents(
-			eventsData,
+			events,
 			selectedCategory,
 			searchText
 		);
@@ -82,7 +94,7 @@ export const EventsPage = () => {
 						>
 							List of all activities
 						</Heading>
-						<AddEventBtn setEvents={fetchEvents} />
+						<AddEventBtn setEvents={setEvents} />
 					</Flex>
 					<Flex gap="12" justifyContent="space-between">
 						{categories && categories.length > 0 ? (
@@ -96,7 +108,10 @@ export const EventsPage = () => {
 							onChange={(e) => setSearchText(e.target.value)}
 						/>
 					</Flex>
-					<Grid templateColumns={{ base:"repeat(1, 1fr)", lg:"repeat(2, 1fr)" }} gap={6}>
+					<Grid
+						templateColumns={{ base: "repeat(1, 1fr)", lg: "repeat(2, 1fr)" }}
+						gap={6}
+					>
 						{filteredEvents.map((event) => (
 							<Link key={event.id} to={`event/${event.id}`}>
 								<EventsCard

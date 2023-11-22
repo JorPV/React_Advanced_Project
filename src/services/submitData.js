@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useToast } from "@chakra-ui/react";
-import { useEventContext } from "../context/EventsDataContext";
+// import { useEventContext } from "../context/EventsDataContext";
 
 export const useCreateEvent = () => {
-	const { updateEvents } = useEventContext();
+	// const { updateEvents } = useEventContext();
 	const [submitting, setSubmitting] = useState(false);
 	const [lastAddedId, setLastAddedId] = useState(null);
 	const toast = useToast();
 	let lastId;
 
-	const createEvent = async (eventData, setIsOpen, setValue) => {
+	const createEvent = async (eventData, setIsOpen, setValue, setEvents ) => {
 		setSubmitting(true);
 
 		try {
@@ -28,7 +28,9 @@ export const useCreateEvent = () => {
 
 			if (response.ok) {
 				// Call updateEvents to update the events context
-				updateEvents(responseData);
+				// updateEvents(responseData);
+
+                setEvents((prevEvents) => [...prevEvents, responseData]);
 
 				// Show a success toast
 				toast({

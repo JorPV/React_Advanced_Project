@@ -12,9 +12,8 @@ import {
 import { useForm } from "react-hook-form";
 import { useCreateEvent } from "../services/submitData";
 
-export const NewEventForm = ({ setIsOpen }) => {
-	const { createEvent, updateEvents } = useCreateEvent(); // custom useCreateEvent hook
-
+export const NewEventForm = ({ setIsOpen, setEvents }) => {
+	const { createEvent } = useCreateEvent(); // custom useCreateEvent hook
 	const {
 		register,
 		setValue,
@@ -23,81 +22,93 @@ export const NewEventForm = ({ setIsOpen }) => {
 	} = useForm();
 
 	const submitData = async (data) => {
-		let lastId;
+		try {
+			let lastId;
+			// Check if the user exists or create a new user
+			let userId;
+			if (data.name) {
+				const usersResponse = await fetch("http://localhost:3000/users");
+				const usersData = await usersResponse.json();
 
-		// Check if the user exists or create a new user
-		let userId;
-		if (data.name) {
-			const usersResponse = await fetch("http://localhost:3000/users");
-			const usersData = await usersResponse.json();
-
-			const existingUser = usersData.find((user) => user.name === data.name);
-			if (existingUser) {
-				userId = existingUser.id;
-			} else {
-				const userResponse = await fetch("http://localhost:3000/users", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						name: data.name,
-						image: "https://www.gstatic.com/webp/gallery3/2.png",
-					}),
-				});
-				const userData = await userResponse.json();
-				userId = userData.id;
+				const existingUser = usersData.find((user) => user.name === data.name);
+				if (existingUser) {
+					userId = existingUser.id;
+				} else {
+					const userResponse = await fetch("http://localhost:3000/users", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({
+							name: data.name,
+							image: "https://www.gstatic.com/webp/gallery3/2.png",
+						}),
+					});
+					const userData = await userResponse.json();
+					userId = userData.id;
+				}
 			}
-		}
 
-		// Create an array of categories and set a default image URL
-		const selectedCategories = [];
-		if (data.sports) {
-			selectedCategories.push(parseInt("1"));
-		}
-		if (data.games) {
-			selectedCategories.push(parseInt("2"));
-		}
-		if (data.relaxation) {
-			selectedCategories.push(parseInt("3"));
-		}
+			// Create an array of categories and set a default image URL
+			const selectedCategories = [];
+			if (data.sports) {
+				selectedCategories.push(parseInt("1"));
+			}
+			if (data.games) {
+				selectedCategories.push(parseInt("2"));
+			}
+			if (data.relaxation) {
+				selectedCategories.push(parseInt("3"));
+			}
 
-		// Use a default image for if no url image is added
-		if (!data.image) {
-			const defaultImageUrls = [
-				"https://www.gstatic.com/webp/gallery/1.jpg",
-				"https://www.gstatic.com/webp/gallery/2.jpg",
-				"https://www.gstatic.com/webp/gallery/4.jpg",
-				"https://www.gstatic.com/webp/gallery/5.jpg",
-			];
+			// Use a default image for if no url image is added
+			if (!data.image) {
+				const defaultImageUrls = [
+					"https://www.gstatic.com/webp/gallery/1.jpg",
+					"https://www.gstatic.com/webp/gallery/2.jpg",
+					"https://www.gstatic.com/webp/gallery/4.jpg",
+					"https://www.gstatic.com/webp/gallery/5.jpg",
+				];
 
-			const randomIndex = Math.floor(Math.random() * defaultImageUrls.length);
-			const defaultImageUrl = defaultImageUrls[randomIndex];
-			data.image = defaultImageUrl;
-		}
+				const randomIndex = Math.floor(Math.random() * defaultImageUrls.length);
+				const defaultImageUrl = defaultImageUrls[randomIndex];
+				data.image = defaultImageUrl;
+			}
 
-		// Event object data
-		const eventData = {
-			id: lastId,
-			createdBy: userId,
-			title: data.title,
-			description: data.description,
-			image: data.image,
-			categoryIds: selectedCategories,
-			location: data.location,
-			startTime: data.startTime,
-			endTime: data.endTime,
-		};
+			// Event object data
+			const eventData = {
+				id: lastId,
+				createdBy: userId,
+				title: data.title,
+				description: data.description,
+				image: data.image,
+				categoryIds: selectedCategories,
+				location: data.location,
+				startTime: data.startTime,
+				endTime: data.endTime,
+			};
 
-		// Call the createEvent function from the useCreateEvent hook
-		const addEvent = await createEvent(eventData, setIsOpen, setValue);
-		if (addEvent) {
-			const updatedResponse = await fetch("http://localhost:3000/events");
-			const updatedData = await updatedResponse.json();
-			updateEvents(updatedData);
+			// Call the createEvent function from the useCreateEvent hook
+			const response = await createEvent(
+				eventData,
+				setIsOpen,
+				setValue,
+				setEvents
+			);
+
+			if (response.ok) {
+				// Update or refresh the data locally
+				setEvents(response.data);
+			}
+			// if (addEvent) {
+			// 	const updatedResponse = await fetch("http://localhost:3000/events");
+			// 	const updatedData = await updatedResponse.json();
+			// 	updateEvents(updatedData);
+			// }
+		} catch (error) {
+			console.error("Error:", error);
 		}
 	};
-
 	return (
 		<>
 			<form onSubmit={handleSubmit(submitData)} id="eventForm">

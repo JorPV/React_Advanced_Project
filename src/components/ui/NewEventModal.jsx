@@ -12,12 +12,11 @@ import { NewEventForm } from "../NewEventForm";
 
 export const NewEventModal = ({ isOpen, onClose, onSubmit, setEvents }) => {
 
-
 	const handleSubmit = async (data) => {
 		try {
-			const response = await onSubmit(data); // Assuming onSubmit is an async function that makes the POST request
+			const response = await onSubmit(data);
 			if (response.ok) {
-				setEvents(); // Update or refresh the data here
+				setEvents(response); // Update or refresh the data
 				onClose(); // Close the modal if the request was successful
 			} else {
 				// Handle error if the response is not okay

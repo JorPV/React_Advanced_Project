@@ -30,14 +30,14 @@ export const EventPage = () => {
 	const { event } = useLoaderData();
 	const { categories, users } = useEventContext();
 	const [isEditEventModalOpen, setIsEditEventModalOpen] = useState(false);
-	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-	const handleEditClick = () => {
+	const handleEdit = () => {
 		setIsEditEventModalOpen(true);
 	};
 
-	const handleDeleteClick = () => {
-		setIsConfirmationModalOpen(true);
+	const handleDelete = () => {
+		setIsDeleteModalOpen(true);
 	};
 
 	const timeOptions = {
@@ -52,9 +52,9 @@ export const EventPage = () => {
 
 	const createdByUser = users.find((user) => user.id === event.createdBy);
 
-	if (!createdByUser) {
-		return <div>Matching user not found</div>; // Handle the case where no matching user is found
-	}
+	// if (!createdByUser) {
+	// 	return <div><h1>User not found</h1></div>; // Handle the case where no matching user is found
+	// }
 
 	return (
 		<Container maxW="75%">
@@ -185,7 +185,7 @@ export const EventPage = () => {
 					colorScheme="pink"
 					size={{ base: "md", md: "md", lg: "lg" }}
 					leftIcon={<EditIcon />}
-					onClick={handleEditClick}
+					onClick={handleEdit}
 				>
 					<Text fontSize={{ base: "md", md: "md", lg: "lg" }}>
 						Edit activity
@@ -195,7 +195,7 @@ export const EventPage = () => {
 					colorScheme="red"
 					size={{ base: "md", md: "md", lg: "lg" }}
 					leftIcon={<DeleteIcon />}
-					onClick={handleDeleteClick}
+					onClick={handleDelete}
 				>
 					<Text fontSize={{ base: "md", md: "md", lg: "lg" }}>
 						Delete activity
@@ -207,8 +207,8 @@ export const EventPage = () => {
 				onClose={() => setIsEditEventModalOpen(false)}
 			/>
 			<ConfirmDeleteModal
-				isOpen={isConfirmationModalOpen}
-				onClose={() => setIsConfirmationModalOpen(false)}
+				isOpen={isDeleteModalOpen}
+				onClose={() => setIsDeleteModalOpen(false)}
 				eventId={event.id}
 			/>
 		</Container>

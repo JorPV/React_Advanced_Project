@@ -7,9 +7,10 @@ export const EventsProvider = ({ children }) => {
 	const [categories, setCategories] = useState([]);
     const [users, setUsers] = useState([]);
 
-	const updateEvents = (newEvents) => {
-		setEvents(newEvents);
-	};
+	// const updateEvents = (newEvents) => {
+    //     console.log("Updating events:", newEvents);
+	// 	setEvents(newEvents);
+	// };
 
 	const fetchCategories = async () => {
 		try {
@@ -18,6 +19,11 @@ export const EventsProvider = ({ children }) => {
 			setCategories(data);
 		} catch (error) {
 			console.error("Error fetching categories:", error);
+            return (
+							<div>
+								<h2>There was an error fetching categories</h2>
+							</div>
+						);
 		}
 	};
 	const fetchUsers = async () => {
@@ -27,6 +33,11 @@ export const EventsProvider = ({ children }) => {
 			setUsers(data);
 		} catch (error) {
 			console.error("Error fetching users:", error);
+            return (
+							<div>
+								<h2>There was an error fetching users</h2>
+							</div>
+						);
 		}
 	};
 
@@ -40,7 +51,7 @@ export const EventsProvider = ({ children }) => {
 
 
 	return (
-		<EventsContext.Provider value={{ events, updateEvents, categories, users }}>
+		<EventsContext.Provider value={{ events, setEvents, categories, users }}>
 			{children}
 		</EventsContext.Provider>
 	);

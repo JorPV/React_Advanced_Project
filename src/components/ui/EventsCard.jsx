@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+// import React, { useState, useEffect } from "react";
 import {
 	Heading,
 	Card,
@@ -10,15 +10,10 @@ import {
 	Tag,
 	CardFooter,
 } from "@chakra-ui/react";
+import { useEventContext } from "../../context/EventsDataContext";
 
-export const EventsCard = ({ event, categories, onClick }) => {
-	// State to hold the event data
-	const [currentEvent, setCurrentEvent] = useState(event);
-
-	// Use useEffect to update the event data when it changes
-	useEffect(() => {
-		setCurrentEvent(event);
-	}, [event]);
+export const EventsCard = ({ event, onClick }) => {
+    const { categories } = useEventContext();
 
 	const timeOptions = {
 		weekday: "long",

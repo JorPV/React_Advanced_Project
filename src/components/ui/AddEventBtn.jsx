@@ -2,7 +2,7 @@ import { Button as NewEventBtn, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { NewEventModal } from "./NewEventModal";
 
-export const AddEventBtn = () => {
+export const AddEventBtn = ({ setEvents }) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const handleOpen = () => {
@@ -26,7 +26,11 @@ export const AddEventBtn = () => {
 					Add new activity
 				</Text>
 			</NewEventBtn>
-			<NewEventModal isOpen={isOpen} onClose={handleClose} />
+			<NewEventModal
+				isOpen={isOpen}
+				onClose={handleClose}
+				setEvents={setEvents}
+			/>
 		</>
 	);
 };
