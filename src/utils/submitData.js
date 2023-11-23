@@ -19,7 +19,6 @@ export const useCreateEvent = () => {
 				body: JSON.stringify(eventData),
 			});
 			const responseData = await response.json();
-			console.log("Success:", responseData);
 			setLastAddedId(lastId);
 			setValue("categoryIds", []); // Reset selectedCategories to an empty array
 			setSubmitting(false);
@@ -32,7 +31,7 @@ export const useCreateEvent = () => {
 					title: "Event created.",
 					description: "Your activity has been successfully added!",
 					status: "success",
-					duration: 9000,
+					duration: 7000,
 					isClosable: true,
 				});
 
@@ -49,7 +48,7 @@ export const useCreateEvent = () => {
 				title: "Error",
 				description: "There was an error creating the event.",
 				status: "error",
-				duration: 9000,
+				duration: 7000,
 				isClosable: true,
 			});
 		}

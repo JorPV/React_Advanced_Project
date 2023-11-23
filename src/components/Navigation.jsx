@@ -12,21 +12,18 @@ export const Navigation = () => {
 			zIndex={1}
 		>
 			<Flex h="full" justifyContent="start">
-                <Spacer maxW={16}/>
+				<Spacer maxW={16} />
 				<Center>
 					<nav>
 						<Text
 							color="blue.600"
 							as="b"
-							fontSize={{ base: "md", md: "lg", lg: "xl" }}
+							fontSize={{ base: "md", md: "lg", lg: "2xl" }}
 						>
 							<Link to="/">List of activities</Link>
 						</Text>
 					</nav>
 				</Center>
-	
-							{/* <Link to="/event/1">Activity page</Link> */}
-				
 			</Flex>
 		</Box>
 	);

@@ -25,7 +25,7 @@ export const ConfirmDeleteModal = ({ isOpen, onClose, eventId }) => {
 				title: "Event deleted",
 				description: "Your activity has been succesfully deleted!",
 				status: "success",
-				duration: 9000,
+				duration: 7000,
 				isClosable: true,
 			});
 			setTimeout(() => {
@@ -37,7 +37,7 @@ export const ConfirmDeleteModal = ({ isOpen, onClose, eventId }) => {
 				title: "Error",
 				description: "There was an error deleting the activity.",
 				status: "error",
-				duration: 9000,
+				duration: 7000,
 				isClosable: true,
 			});
 		}

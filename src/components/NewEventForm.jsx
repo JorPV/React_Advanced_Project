@@ -101,7 +101,6 @@ export const NewEventForm = ({ setIsOpen, setEvents }) => {
 				setEvents(response.data);
 			}
 		} catch (error) {
-			console.error("Error:", error);
 			return (
 				<div
 					style={{
@@ -122,7 +121,6 @@ export const NewEventForm = ({ setIsOpen, setEvents }) => {
 	return (
 		<>
 			<form onSubmit={handleSubmit(submitData)} id="eventForm">
-				{/* To do: add the isRequired attribute to each form control */}
 				<FormControl>
 					<FormLabel>Name</FormLabel>
 					<Input

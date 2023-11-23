@@ -24,7 +24,7 @@ export const useEditEvent = () => {
 					title: "Data updated.",
 					description: "Your data has been successfully updated!",
 					status: "success",
-					duration: 9000,
+					duration: 7000,
 					isClosable: true,
 				});
                 return responseData;
@@ -33,7 +33,7 @@ export const useEditEvent = () => {
 					title: "Error",
 					description: "There was an error updating the data.",
 					status: "error",
-					duration: 9000,
+					duration: 7000,
 					isClosable: true,
 				});
 			}
@@ -45,7 +45,7 @@ export const useEditEvent = () => {
 				title: "Error",
 				description: "There was an error updating the data.",
 				status: "error",
-				duration: 9000,
+				duration: 7000,
 				isClosable: true,
 			});
             throw error;
