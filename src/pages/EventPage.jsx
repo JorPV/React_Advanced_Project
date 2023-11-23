@@ -9,6 +9,7 @@ import {
 	Spacer,
 	Avatar,
 	Tag,
+	Spinner,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { Button as DeleteButton } from "@chakra-ui/react";
@@ -32,6 +33,27 @@ export const EventPage = () => {
 	const [isEditEventModalOpen, setIsEditEventModalOpen] = useState(false);
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
+	// Check if users data is available
+	if (!users || users.length === 0) {
+		return (
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "center",
+					marginTop: "10rem",
+				}}
+			>
+				<Spinner size="lg" m="4" />
+				<h1 style={{ fontSize: "42px" }}>Loading...</h1>
+			</div>
+		);
+	}
+	const createdByUser = users.find((user) => user.id === event.createdBy);
+
+	if (!createdByUser || createdByUser === undefined) {
+		return <div>User not found</div>; // Handle the case where no matching user is found
+	}
+
 	const handleEdit = () => {
 		setIsEditEventModalOpen(true);
 	};
@@ -39,6 +61,10 @@ export const EventPage = () => {
 	const handleDelete = () => {
 		setIsDeleteModalOpen(true);
 	};
+
+	// useEffect(() => {
+	// 	setUpdateEventData(event);
+	// }, [updateEventData]);
 
 	const timeOptions = {
 		weekday: "long",
@@ -49,12 +75,6 @@ export const EventPage = () => {
 		minute: "numeric",
 		hour12: true,
 	};
-
-	const createdByUser = users.find((user) => user.id === event.createdBy);
-
-	// if (!createdByUser) {
-	// 	return <div><h1>User not found</h1></div>; // Handle the case where no matching user is found
-	// }
 
 	return (
 		<Container maxW="75%">
@@ -205,6 +225,8 @@ export const EventPage = () => {
 			<EditEventModal
 				isOpen={isEditEventModalOpen}
 				onClose={() => setIsEditEventModalOpen(false)}
+				initialEventData={event}
+				// setUpdateEventData={setUpdateEventData}
 			/>
 			<ConfirmDeleteModal
 				isOpen={isDeleteModalOpen}

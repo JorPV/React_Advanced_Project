@@ -13,14 +13,23 @@ import { EditEventForm } from "../EditEventForm";
 import { useEditEvent } from "../../services/editData";
 import { useState } from "react";
 
-export const EditEventModal = ({ isOpen, onClose, initialEventData }) => {
+export const EditEventModal = ({
+	isOpen,
+	onClose,
+	initialEventData,
+	// updatedData,
+}) => {
 	const { updateEvent } = useEditEvent();
-    const [ updatedEventData, setUpdatedEventData ] = useState(initialEventData);
+	const [updatedEventData, setUpdatedEventData] = useState(initialEventData);
 
 	const handleUpdate = async (eventId, data) => {
 		try {
-			await updateEvent(eventId, data);
-            setUpdatedEventData(updatedData);
+			const updatedEvent = await updateEvent(eventId, data);
+			// setUpdatedEventData(updatedData);
+
+			// setUpdatedEventData(data);
+			// setUpdateEvent(data);
+			setUpdatedEventData(updatedEvent);
 			onClose();
 		} catch (error) {
 			console.error("Error during handleUpdate:", error);
@@ -37,8 +46,8 @@ export const EditEventModal = ({ isOpen, onClose, initialEventData }) => {
 					<EditEventForm
 						handleUpdate={handleUpdate}
 						setIsOpen={onClose}
-						updateEvent={updateEvent}
-						initialEventData={initialEventData}
+						// updateEvent={updateEvent}
+						// initialEventData={initialEventData}
 					/>
 				</ModalBody>
 

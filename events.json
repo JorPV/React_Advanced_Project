@@ -103,31 +103,16 @@
     },
     {
       "createdBy": 3,
-      "title": "Last TEST",
-      "description": "This is a test",
+      "title": "HELLO WORLD",
+      "description": "And description",
       "image": "https://www.gstatic.com/webp/gallery/5.jpg",
       "categoryIds": [
-        1,
         3
       ],
       "location": "Woonkamer",
       "startTime": "2023-12-02T18:17",
       "endTime": "2023-11-21T18:21",
       "id": 9
-    },
-    {
-      "createdBy": 4,
-      "title": "New event",
-      "description": "Another Test",
-      "image": "https://www.gstatic.com/webp/gallery/4.jpg",
-      "categoryIds": [
-        2,
-        3
-      ],
-      "location": "dresden",
-      "startTime": "2023-11-22T11:33",
-      "endTime": "2023-11-22T11:36",
-      "id": 10
     },
     {
       "createdBy": 2,
@@ -144,16 +129,30 @@
     },
     {
       "createdBy": 3,
-      "title": "Another event",
-      "description": "Singing lessons",
-      "image": "https://www.gstatic.com/webp/gallery/1.jpg",
+      "title": "QUATRETONDA",
+      "description": "Visita guiada",
+      "image": "https://www.gstatic.com/webp/gallery/4.jpg",
       "categoryIds": [
-        2
+        1,
+        3
+      ],
+      "location": "Carrer",
+      "startTime": "2023-11-22T15:03",
+      "endTime": "2023-11-22T18:03",
+      "id": 12
+    },
+    {
+      "createdBy": 4,
+      "title": "Last test",
+      "description": "Another Test",
+      "image": "https://www.gstatic.com/webp/gallery/2.jpg",
+      "categoryIds": [
+        1
       ],
       "location": "Woonkamer",
-      "startTime": "2023-11-22T12:26",
-      "endTime": "2023-11-22T13:26",
-      "id": 12
+      "startTime": "2023-11-22T15:10",
+      "endTime": "2023-11-22T20:12",
+      "id": 13
     }
   ],
   "categories": [

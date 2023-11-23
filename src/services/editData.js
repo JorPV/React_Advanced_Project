@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useToast } from "@chakra-ui/react";
-import { useEventContext } from "../context/EventsDataContext";
+// import { useEventContext } from "../context/EventsDataContext";
 
 export const useEditEvent = () => {
-	const { updateEvents } = useEventContext();
+	// const { updateEvents } = useEventContext();
 	const [submitting, setSubmitting] = useState(false);
 	const toast = useToast();
 
-	const updateData = async (eventId, data) => {
-		console.log("Updating data:", data, "Event ID:", eventId);
+	const updateData = async (eventId, data ) => {
 		setSubmitting(true);
 
 		try {
@@ -20,11 +19,9 @@ export const useEditEvent = () => {
 				body: JSON.stringify(data),
 			});
 			const responseData = await response.json();
-			console.log("Success:", responseData);
 			setSubmitting(false);
 
 			if (response.ok) {
-				// Show a success toast
 				toast({
 					title: "Data updated.",
 					description: "Your data has been successfully updated!",
@@ -34,7 +31,10 @@ export const useEditEvent = () => {
 				});
 
 				// Call updateEvents to update the context
-				updateEvents(responseData);
+				// updateEvents(responseData);
+
+                // setUpdateEvent(responseData);
+                return responseData;
 			} else {
 				// Show an error toast
 				toast({
@@ -57,6 +57,7 @@ export const useEditEvent = () => {
 				duration: 9000,
 				isClosable: true,
 			});
+            throw error;
 		}
 	};
 

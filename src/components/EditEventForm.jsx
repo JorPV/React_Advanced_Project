@@ -119,7 +119,6 @@ export const EditEventForm = ({ handleUpdate, setIsOpen }) => {
 				<FormControl mt={4} mb={4}>
 					<FormLabel>Update categories</FormLabel>
 					<CheckboxGroup colorScheme="green">
-						<p>{errors.categoryIds?.message}</p>
 						<Stack spacing={[1, 5]} direction={["column", "row"]}>
 							<Checkbox value="1" name="sports" {...register("sports")}>
 								Sports
