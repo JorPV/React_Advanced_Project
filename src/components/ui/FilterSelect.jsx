@@ -1,6 +1,5 @@
 import { Select } from "@chakra-ui/react";
 
-
 export const FilterSelect = ({ categories, setSelectedCategory }) => {
 	return (
 		<>

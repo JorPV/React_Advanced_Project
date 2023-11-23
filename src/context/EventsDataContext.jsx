@@ -3,14 +3,8 @@ import { createContext, useEffect, useState, useContext } from "react";
 export const EventsContext = createContext();
 
 export const EventsProvider = ({ children }) => {
-	const [events, setEvents] = useState([]);
 	const [categories, setCategories] = useState([]);
 	const [users, setUsers] = useState([]);
-
-	// const updateEvents = (updateData) => {
-	// 	console.log("Updating events:", updateData);
-	// 	setEvents(updateData);
-	// };
 
 	const fetchCategories = async () => {
 		try {
@@ -20,8 +14,16 @@ export const EventsProvider = ({ children }) => {
 		} catch (error) {
 			console.error("Error fetching categories:", error);
 			return (
-				<div>
-					<h2>There was an error fetching categories</h2>
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "center",
+						marginTop: "10rem",
+					}}
+				>
+					<h2 style={{ fontSize: "42px" }}>
+						There was an error fetching users.
+					</h2>
 				</div>
 			);
 		}
@@ -34,8 +36,16 @@ export const EventsProvider = ({ children }) => {
 		} catch (error) {
 			console.error("Error fetching users:", error);
 			return (
-				<div>
-					<h2>There was an error fetching users</h2>
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "center",
+						marginTop: "10rem",
+					}}
+				>
+					<h2 style={{ fontSize: "42px" }}>
+						There was an error fetching categories.
+					</h2>
 				</div>
 			);
 		}
@@ -50,9 +60,7 @@ export const EventsProvider = ({ children }) => {
 	}, []);
 
 	return (
-		<EventsContext.Provider
-			value={{ events, setEvents, categories, users }}
-		>
+		<EventsContext.Provider value={{ categories, users }}>
 			{children}
 		</EventsContext.Provider>
 	);

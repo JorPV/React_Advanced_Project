@@ -11,19 +11,35 @@ import {
 import { NewEventForm } from "../NewEventForm";
 
 export const NewEventModal = ({ isOpen, onClose, onSubmit, setEvents }) => {
+	const handleSubmitError = (errorMessage) => {
+		console.error("Submit error:", errorMessage);
+		return (
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "center",
+					marginTop: "10rem",
+				}}
+			>
+				<h1 style={{ fontSize: "42px" }}>
+					It seems that something went wrong... Try again!
+				</h1>
+			</div>
+		);
+	};
 
 	const handleSubmit = async (data) => {
 		try {
 			const response = await onSubmit(data);
 			if (response.ok) {
-				setEvents(response); // Update or refresh the data
-				onClose(); // Close the modal if the request was successful
+				setEvents(response);
+				onClose();
 			} else {
-				// Handle error if the response is not okay
+				handleSubmitError(response.error);
 			}
 		} catch (error) {
-			// Handle any errors that occur during the POST request
-		} 
+			handleSubmitError(error.message);
+		}
 	};
 
 	return (

@@ -29,6 +29,7 @@ export const loader = async ({ params }) => {
 
 export const EventPage = () => {
 	const { event } = useLoaderData();
+	const [eventData, setEventData] = useState(event);
 	const { categories, users } = useEventContext();
 	const [isEditEventModalOpen, setIsEditEventModalOpen] = useState(false);
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -50,21 +51,17 @@ export const EventPage = () => {
 	}
 	const createdByUser = users.find((user) => user.id === event.createdBy);
 
-	if (!createdByUser || createdByUser === undefined) {
-		return <div>User not found</div>; // Handle the case where no matching user is found
-	}
+	const handleUpdateEventData = (updatedEventData) => {
+		setEventData(updatedEventData);
+	};
 
-	const handleEdit = () => {
+	const openEditModal = () => {
 		setIsEditEventModalOpen(true);
 	};
 
-	const handleDelete = () => {
+	const openDeleteModal = () => {
 		setIsDeleteModalOpen(true);
 	};
-
-	// useEffect(() => {
-	// 	setUpdateEventData(event);
-	// }, [updateEventData]);
 
 	const timeOptions = {
 		weekday: "long",
@@ -94,7 +91,7 @@ export const EventPage = () => {
 								as="h2"
 								size={{ base: "lg", md: "xl", lg: "2xl" }}
 							>
-								{event.title}
+								{eventData.title}
 							</Heading>
 							<Text
 								fontSize={{ base: "md", md: "md", lg: "xl" }}
@@ -102,7 +99,7 @@ export const EventPage = () => {
 								as="em"
 								color="gray.600"
 							>
-								{event.description}
+								{eventData.description}
 							</Text>
 						</div>
 						<Flex justifyContent="center" alignItems="center">
@@ -133,8 +130,8 @@ export const EventPage = () => {
 						<Image
 							borderRadius="3%"
 							boxSize={{ base: "100%", md: "50%", lg: "40%" }}
-							src={event.image}
-							alt="Event image"
+							src={eventData.image}
+							alt="Activity image"
 							marginRight={8}
 							mb={{ base: "5", lg: "0" }}
 						/>
@@ -144,7 +141,7 @@ export const EventPage = () => {
 									Location:
 								</Text>
 								<Text fontSize={{ base: "sm", md: "md", lg: "lg" }}>
-									{event.location}
+									{eventData.location}
 								</Text>
 							</div>
 							<div>
@@ -153,7 +150,7 @@ export const EventPage = () => {
 										Starts:{" "}
 									</Text>
 									<Text fontSize={{ base: "sm", md: "md", lg: "lg" }}>
-										{new Date(event.startTime).toLocaleString(
+										{new Date(eventData.startTime).toLocaleString(
 											"en-US",
 											timeOptions
 										)}
@@ -164,7 +161,7 @@ export const EventPage = () => {
 										Finishes:{" "}
 									</Text>
 									<Text fontSize={{ base: "sm", md: "md", lg: "lg" }}>
-										{new Date(event.endTime).toLocaleString(
+										{new Date(eventData.endTime).toLocaleString(
 											"en-US",
 											timeOptions
 										)}
@@ -180,7 +177,7 @@ export const EventPage = () => {
 								fontSize={{ base: "md", md: "md", lg: "lg" }}
 							>
 								Categories:
-								{(event.categoryIds || []).map((categoryId, index) => {
+								{(eventData.categoryIds || []).map((categoryId, index) => {
 									const category = categories.find((c) => c.id === categoryId);
 									return (
 										<Tag
@@ -205,7 +202,7 @@ export const EventPage = () => {
 					colorScheme="pink"
 					size={{ base: "md", md: "md", lg: "lg" }}
 					leftIcon={<EditIcon />}
-					onClick={handleEdit}
+					onClick={openEditModal}
 				>
 					<Text fontSize={{ base: "md", md: "md", lg: "lg" }}>
 						Edit activity
@@ -215,7 +212,7 @@ export const EventPage = () => {
 					colorScheme="red"
 					size={{ base: "md", md: "md", lg: "lg" }}
 					leftIcon={<DeleteIcon />}
-					onClick={handleDelete}
+					onClick={openDeleteModal}
 				>
 					<Text fontSize={{ base: "md", md: "md", lg: "lg" }}>
 						Delete activity
@@ -225,8 +222,8 @@ export const EventPage = () => {
 			<EditEventModal
 				isOpen={isEditEventModalOpen}
 				onClose={() => setIsEditEventModalOpen(false)}
-				initialEventData={event}
-				// setUpdateEventData={setUpdateEventData}
+				initialEventData={eventData}
+				onUpdateEventData={handleUpdateEventData}
 			/>
 			<ConfirmDeleteModal
 				isOpen={isDeleteModalOpen}

@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { useToast } from "@chakra-ui/react";
-// import { useEventContext } from "../context/EventsDataContext";
 
 export const useCreateEvent = () => {
-	// const { updateEvents } = useEventContext();
 	const [submitting, setSubmitting] = useState(false);
 	const [lastAddedId, setLastAddedId] = useState(null);
 	const toast = useToast();
 	let lastId;
 
-	const createEvent = async (eventData, setIsOpen, setValue, setEvents ) => {
+	const createEvent = async (eventData, setIsOpen, setValue, setEvents) => {
 		setSubmitting(true);
 
 		try {
@@ -27,10 +25,7 @@ export const useCreateEvent = () => {
 			setSubmitting(false);
 
 			if (response.ok) {
-				// Call updateEvents to update the events context
-				// updateEvents(responseData);
-
-                setEvents((prevEvents) => [...prevEvents, responseData]);
+				setEvents((prevEvents) => [...prevEvents, responseData]);
 
 				// Show a success toast
 				toast({
@@ -40,7 +35,7 @@ export const useCreateEvent = () => {
 					duration: 9000,
 					isClosable: true,
 				});
-                
+
 				// Close the modal after 2 seconds
 				setTimeout(() => {
 					setIsOpen(false);

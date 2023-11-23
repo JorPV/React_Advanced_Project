@@ -10,32 +10,8 @@ import {
 } from "@chakra-ui/react";
 import { CheckIcon } from "@chakra-ui/icons";
 import { EditEventForm } from "../EditEventForm";
-import { useEditEvent } from "../../services/editData";
-import { useState } from "react";
 
-export const EditEventModal = ({
-	isOpen,
-	onClose,
-	initialEventData,
-	// updatedData,
-}) => {
-	const { updateEvent } = useEditEvent();
-	const [updatedEventData, setUpdatedEventData] = useState(initialEventData);
-
-	const handleUpdate = async (eventId, data) => {
-		try {
-			const updatedEvent = await updateEvent(eventId, data);
-			// setUpdatedEventData(updatedData);
-
-			// setUpdatedEventData(data);
-			// setUpdateEvent(data);
-			setUpdatedEventData(updatedEvent);
-			onClose();
-		} catch (error) {
-			console.error("Error during handleUpdate:", error);
-		}
-	};
-
+export const EditEventModal = ({ isOpen, onClose, onUpdateEventData }) => {
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} size={"xl"}>
 			<ModalOverlay />
@@ -44,10 +20,8 @@ export const EditEventModal = ({
 				<ModalCloseButton />
 				<ModalBody pb={6}>
 					<EditEventForm
-						handleUpdate={handleUpdate}
 						setIsOpen={onClose}
-						// updateEvent={updateEvent}
-						// initialEventData={initialEventData}
+						onUpdateEventData={onUpdateEventData}
 					/>
 				</ModalBody>
 

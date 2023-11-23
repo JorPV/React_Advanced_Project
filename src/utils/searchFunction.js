@@ -1,5 +1,5 @@
 export const searchEventsByTitle = (eventsData, searchText) => {
-	const searchString = searchText ? searchText.toString() : ""; // Convert searchText to a string
+	const searchString = searchText ? searchText.toString() : "";
 
 	if (!searchText) {
 		return eventsData;

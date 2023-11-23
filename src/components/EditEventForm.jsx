@@ -11,9 +11,11 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { useEditEvent } from "../utils/editData";
 
-export const EditEventForm = ({ handleUpdate, setIsOpen }) => {
+export const EditEventForm = ({ setIsOpen, onUpdateEventData }) => {
 	const { eventId } = useParams();
+	const { updateEvent } = useEditEvent();
 
 	const {
 		register,
@@ -22,7 +24,7 @@ export const EditEventForm = ({ handleUpdate, setIsOpen }) => {
 	} = useForm();
 
 	const editData = async (data) => {
-		// Create an array of categories and set a default image URL
+		// Create an array of categories
 		const selectedCategories = [];
 		if (data.sports) {
 			selectedCategories.push(parseInt("1"));
@@ -35,7 +37,7 @@ export const EditEventForm = ({ handleUpdate, setIsOpen }) => {
 		}
 
 		try {
-			// Construct the PATCH request body
+			//PATCH request body
 			const patchData = {
 				...(data.title && { title: data.title }),
 				...(data.description && { description: data.description }),
@@ -47,27 +49,30 @@ export const EditEventForm = ({ handleUpdate, setIsOpen }) => {
 					categoryIds: selectedCategories,
 				}),
 			};
-
-			// Use the updateData hook from useEditEvent
-			await handleUpdate(eventId, patchData);
-			// Update local state or handle any additional logic
+			const updatedEventData = await updateEvent(eventId, patchData);
+			onUpdateEventData(updatedEventData);
 			setIsOpen(false);
 		} catch (error) {
 			console.error("Error:", error);
-			// Handle error scenarios if needed
+			return (
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "center",
+						marginTop: "10rem",
+					}}
+				>
+					<h1 style={{ fontSize: "42px" }}>
+						Unfortunately... an error ocurred when editing the activity.
+					</h1>
+				</div>
+			);
 		}
 	};
 
 	return (
 		<>
 			<form onSubmit={handleSubmit(editData)} id="updateForm">
-				{/* To do: add the isRequired attribute to each form control */}
-				{/* <FormControl>
-					<FormLabel>Name</FormLabel>
-					<Input {...register("name")} placeholder="Change name" name="name" />
-					<Text color="tomato">{errors?.name && errors.name.message}</Text>
-				</FormControl> */}
-
 				<FormControl mt={4}>
 					<FormLabel>Activity title</FormLabel>
 					<Input

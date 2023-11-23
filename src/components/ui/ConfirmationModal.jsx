@@ -11,7 +11,7 @@ import {
 	ModalFooter,
 	useToast,
 } from "@chakra-ui/react";
-import { deleteEvent } from "../../services/deleteData";
+import { deleteEvent } from "../../utils/deleteData";
 import { useNavigate } from "react-router-dom";
 
 export const ConfirmDeleteModal = ({ isOpen, onClose, eventId }) => {

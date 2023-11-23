@@ -78,53 +78,17 @@
       "endTime": "2023-03-09T07:00:00.000Z"
     },
     {
-      "createdBy": 3,
-      "title": "Test activity",
-      "description": "This is my playground",
-      "image": "https://www.gstatic.com/webp/gallery/4.jpg",
-      "categoryIds": [
-        2
-      ],
-      "location": "Somewhere",
-      "startTime": "2023-11-21T16:51",
-      "endTime": "2023-11-21T17:51",
-      "id": 5
-    },
-    {
-      "createdBy": 3,
-      "title": "One more event",
-      "description": "This is a test",
-      "image": "https://www.gstatic.com/webp/gallery/1.jpg",
-      "categoryIds": [],
-      "location": "Woonkamer",
-      "startTime": "2023-11-21T16:59",
-      "endTime": "2023-11-21T17:59",
-      "id": 8
-    },
-    {
-      "createdBy": 3,
-      "title": "HELLO WORLD",
-      "description": "And description",
+      "createdBy": 2,
+      "title": "New title",
+      "description": "Ukele & guitar lessons",
       "image": "https://www.gstatic.com/webp/gallery/5.jpg",
       "categoryIds": [
+        1,
         3
       ],
       "location": "Woonkamer",
-      "startTime": "2023-12-02T18:17",
-      "endTime": "2023-11-21T18:21",
-      "id": 9
-    },
-    {
-      "createdBy": 2,
-      "title": "Jane event",
-      "description": "This is a test",
-      "image": "https://www.gstatic.com/webp/gallery/5.jpg",
-      "categoryIds": [
-        2
-      ],
-      "location": "In my house",
-      "startTime": "2023-11-22T12:05",
-      "endTime": "2023-11-22T13:05",
+      "startTime": "2023-11-23T15:56",
+      "endTime": "2023-11-23T16:56",
       "id": 11
     },
     {
@@ -140,19 +104,6 @@
       "startTime": "2023-11-22T15:03",
       "endTime": "2023-11-22T18:03",
       "id": 12
-    },
-    {
-      "createdBy": 4,
-      "title": "Last test",
-      "description": "Another Test",
-      "image": "https://www.gstatic.com/webp/gallery/2.jpg",
-      "categoryIds": [
-        1
-      ],
-      "location": "Woonkamer",
-      "startTime": "2023-11-22T15:10",
-      "endTime": "2023-11-22T20:12",
-      "id": 13
     }
   ],
   "categories": [

@@ -23,7 +23,6 @@ const router = createBrowserRouter([
 				path: "/event/:eventId",
 				element: <EventPage />,
 				loader: eventLoader,
-				// action: addComment,
 			},
 		],
 	},
@@ -31,10 +30,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
 	// <React.StrictMode>
-	<ChakraProvider>
-		<EventsProvider>
-			<RouterProvider router={router} />
-		</EventsProvider>
-	</ChakraProvider>
+		<ChakraProvider>
+			<EventsProvider>
+				<RouterProvider router={router} />
+			</EventsProvider>
+		</ChakraProvider>
 	// </React.StrictMode>
 );

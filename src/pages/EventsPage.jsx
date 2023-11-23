@@ -17,17 +17,29 @@ export const EventsPage = () => {
 	const [selectedActivity, setSelectedActivity] = useState(null);
 	const [events, setEvents] = useState([]);
 	const { events: initialEvents } = useLoaderData();
-	const [searchText, setSearchText] = useState(""); // Initialize searchText state
-	const [selectedCategory, setSelectedCategory] = useState(null); // Initialize categoryFilter state
+	const [searchText, setSearchText] = useState("");
+	const [selectedCategory, setSelectedCategory] = useState(null);
 
 	const fetchEvents = async () => {
 		try {
 			const response = await fetch("http://localhost:3000/events");
 			const data = await response.json();
-			setEvents(data); // Update the events data
+			setEvents(data);
 		} catch (error) {
 			console.error("Error fetching events:", error);
-			return <div>Error fetching events. Please try again later.</div>;
+			return (
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "center",
+						marginTop: "10rem",
+					}}
+				>
+					<h1 style={{ fontSize: "42px" }}>
+						Error accessing activities. Please try again later..
+					</h1>
+				</div>
+			);
 		}
 	};
 
@@ -57,12 +69,7 @@ export const EventsPage = () => {
 		return filteredEvents;
 	};
 
-	if (
-		!events ||
-		events.length === 0 
-		// !categories ||
-		// categories.length === 0
-	) {
+	if (!events || events.length === 0) {
 		return (
 			<div
 				style={{
@@ -71,16 +78,12 @@ export const EventsPage = () => {
 					marginTop: "10rem",
 				}}
 			>
-				<Spinner size="lg" m="4"/>
-				<h1 style={{ fontSize: "42px" }}>Loading...</h1>
+				<Spinner size="lg" m="4" />
+				<h1 style={{ fontSize: "42px" }}>There are no activities yet.</h1>
 			</div>
 		);
 	} else {
-		const filteredEvents = filterEvents(
-			events,
-			selectedCategory,
-			searchText
-		);
+		const filteredEvents = filterEvents(events, selectedCategory, searchText);
 
 		return (
 			<Container maxW="auto" bg="gray.50" h="full" centerContent>

@@ -1,4 +1,3 @@
-// import React, { useState, useEffect } from "react";
 import {
 	Heading,
 	Card,
@@ -13,7 +12,7 @@ import {
 import { useEventContext } from "../../context/EventsDataContext";
 
 export const EventsCard = ({ event, onClick }) => {
-    const { categories } = useEventContext();
+	const { categories } = useEventContext();
 
 	const timeOptions = {
 		weekday: "long",
@@ -56,11 +55,7 @@ export const EventsCard = ({ event, onClick }) => {
 					<Text as="em" fontSize="lg" color="gray.600">
 						{event.description}
 					</Text>
-					<Flex
-						h="full"
-						direction="column"
-						justifyContent="space-evenly"
-					>
+					<Flex h="full" direction="column" justifyContent="space-evenly">
 						<div>
 							<Text
 								fontWeight="semibold"
@@ -69,7 +64,10 @@ export const EventsCard = ({ event, onClick }) => {
 							>
 								Location:
 							</Text>
-							<Text fontSize={{ base: "md", md: "lg", lg: "19px" }}>
+							<Text
+								fontSize={{ base: "md", md: "lg", lg: "19px" }}
+								fontWeight="thin"
+							>
 								{event.location}
 							</Text>
 						</div>
@@ -100,29 +98,29 @@ export const EventsCard = ({ event, onClick }) => {
 				</CardBody>
 
 				<CardFooter h="105px">
-                    <Flex flexDirection="column" justifyContent="end" alignItems="end" >
-					<Text
-						fontWeight="semibold"
-						fontSize={{ base: "md", md: "lg", lg: "19px" }}
-						as="u"
-					>
-						Categories:
-						{(event.categoryIds || []).map((categoryId, index) => {
-							const category = categories.find((c) => c.id === categoryId);
-							return (
-								<Tag
-									key={index}
-									size={{ base: "md", md: "md", lg: "lg" }}
-									variant="outline"
-									colorScheme="purple"
-									ml="0.5em"
-								>
-									{category ? category.name : ""}
-								</Tag>
-							);
-						})}
-					</Text>
-                    </Flex>
+					<Flex flexDirection="column" justifyContent="end" alignItems="end">
+						<Text
+							fontWeight="semibold"
+							fontSize={{ base: "md", md: "lg", lg: "19px" }}
+							as="u"
+						>
+							Categories:
+							{(event.categoryIds || []).map((categoryId, index) => {
+								const category = categories.find((c) => c.id === categoryId);
+								return (
+									<Tag
+										key={index}
+										size={{ base: "md", md: "md", lg: "lg" }}
+										variant="outline"
+										colorScheme="purple"
+										ml="0.5em"
+									>
+										{category ? category.name : ""}
+									</Tag>
+								);
+							})}
+						</Text>
+					</Flex>
 				</CardFooter>
 			</Stack>
 		</Card>

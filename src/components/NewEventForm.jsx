@@ -10,7 +10,7 @@ import {
 	InputLeftAddon,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { useCreateEvent } from "../services/submitData";
+import { useCreateEvent } from "../utils/submitData";
 
 export const NewEventForm = ({ setIsOpen, setEvents }) => {
 	const { createEvent } = useCreateEvent(); // custom useCreateEvent hook
@@ -49,7 +49,7 @@ export const NewEventForm = ({ setIsOpen, setEvents }) => {
 				}
 			}
 
-			// Create an array of categories and set a default image URL
+			// Create an array of categories
 			const selectedCategories = [];
 			if (data.sports) {
 				selectedCategories.push(parseInt("1"));
@@ -61,7 +61,7 @@ export const NewEventForm = ({ setIsOpen, setEvents }) => {
 				selectedCategories.push(parseInt("3"));
 			}
 
-			// Use a default image for if no url image is added
+			// Use a default image if no url image is added
 			if (!data.image) {
 				const defaultImageUrls = [
 					"https://www.gstatic.com/webp/gallery/1.jpg",
@@ -100,15 +100,25 @@ export const NewEventForm = ({ setIsOpen, setEvents }) => {
 				// Update or refresh the data locally
 				setEvents(response.data);
 			}
-			// if (addEvent) {
-			// 	const updatedResponse = await fetch("http://localhost:3000/events");
-			// 	const updatedData = await updatedResponse.json();
-			// 	updateEvents(updatedData);
-			// }
 		} catch (error) {
 			console.error("Error:", error);
+			return (
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "center",
+						marginTop: "10rem",
+					}}
+				>
+					<h1 style={{ fontSize: "42px" }}>
+						Unfortunately, there was an error creating the activity. Please, try
+						again!
+					</h1>
+				</div>
+			);
 		}
 	};
+
 	return (
 		<>
 			<form onSubmit={handleSubmit(submitData)} id="eventForm">

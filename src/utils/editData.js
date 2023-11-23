@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { useToast } from "@chakra-ui/react";
-// import { useEventContext } from "../context/EventsDataContext";
 
 export const useEditEvent = () => {
-	// const { updateEvents } = useEventContext();
 	const [submitting, setSubmitting] = useState(false);
 	const toast = useToast();
 
-	const updateData = async (eventId, data ) => {
+	const updateData = async (eventId, data) => {
 		setSubmitting(true);
 
 		try {
@@ -29,14 +27,8 @@ export const useEditEvent = () => {
 					duration: 9000,
 					isClosable: true,
 				});
-
-				// Call updateEvents to update the context
-				// updateEvents(responseData);
-
-                // setUpdateEvent(responseData);
                 return responseData;
 			} else {
-				// Show an error toast
 				toast({
 					title: "Error",
 					description: "There was an error updating the data.",
@@ -49,7 +41,6 @@ export const useEditEvent = () => {
 			console.error("Error:", error);
 			setSubmitting(false);
 
-			// Show an error toast
 			toast({
 				title: "Error",
 				description: "There was an error updating the data.",
