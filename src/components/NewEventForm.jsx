@@ -97,7 +97,6 @@ export const NewEventForm = ({ setIsOpen, setEvents }) => {
 			);
 
 			if (response.ok) {
-				// Update or refresh the data locally
 				setEvents(response.data);
 			}
 		} catch (error) {

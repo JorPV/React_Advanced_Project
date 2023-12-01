@@ -46,11 +46,11 @@ export const useCreateEvent = () => {
 
 			toast({
 				title: "Error",
-				description: "There was an error creating the event.",
+				description: "There was an error creating the activity. Please try again",
 				status: "error",
 				duration: 7000,
 				isClosable: true,
-			});
+			});				
 		}
 	};
 

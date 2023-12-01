@@ -12,8 +12,7 @@ import {
 	Spinner,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import { Button as DeleteButton } from "@chakra-ui/react";
-import { Button as EditButton } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { useLoaderData } from "react-router-dom";
 import { useEventContext } from "../context/EventsDataContext";
 import { useState } from "react";
@@ -83,8 +82,12 @@ export const EventPage = () => {
 				mt={{ base: "10", lg: "20" }}
 			>
 				<Box m="8">
-					<Flex justifyContent={"space-between"}>
-						<div>
+					<Flex
+						flexDirection={{ base: "column", md:"row"}}
+						justifyContent={{ base: "start", md: "space-between" }}
+						alignItems={{ base: "end", lg: "center" }}
+					>
+						<Box alignSelf="start">
 							<Heading
 								mb="3"
 								color={"teal.500"}
@@ -101,22 +104,22 @@ export const EventPage = () => {
 							>
 								{eventData.description}
 							</Text>
-						</div>
-						<Flex justifyContent="center" alignItems="center">
+						</Box>
+						<Flex justifyContent="center" alignItems="center" my={{base:5, lg:0}}>
 							<div>
 								<Text
-									fontSize={{ base: "sm", md: "md", lg: "xl" }}
+									fontSize={{ base: "12px", md: "md", lg: "xl" }}
 									mr="5"
 									as="b"
 								>
 									Created by:
 								</Text>
-								<Text fontSize={{ base: "sm", md: "md", lg: "lg" }}>
+								<Text fontSize={{ base: "10px", md: "md", lg: "lg" }}>
 									{createdByUser.name}
 								</Text>
 							</div>
 							<Avatar
-								size={{ base: "lg", md: "xl", lg: "xl" }}
+								size={{ base: "sm", md: "lg", lg: "xl" }}
 								name={createdByUser.name}
 								src={createdByUser.image}
 							/>
@@ -124,12 +127,12 @@ export const EventPage = () => {
 					</Flex>
 					<Spacer h={9} />
 					<Flex
-						direction={{ base: "column", md: "column", lg: "row" }}
+						direction={{ base: "column", lg: "row" }}
 						justifyContent={"between"}
 					>
 						<Image
 							borderRadius="3%"
-							boxSize={{ base: "100%", md: "50%", lg: "40%" }}
+							boxSize={{ base: "100%", lg: "40%" }}
 							src={eventData.image}
 							alt="Activity image"
 							marginRight={8}
@@ -198,7 +201,7 @@ export const EventPage = () => {
 			</Center>
 
 			<Flex my="8" justifyContent="right" gap="4">
-				<EditButton
+				<Button
 					colorScheme="pink"
 					size={{ base: "md", md: "md", lg: "lg" }}
 					leftIcon={<EditIcon />}
@@ -207,8 +210,8 @@ export const EventPage = () => {
 					<Text fontSize={{ base: "md", md: "md", lg: "lg" }}>
 						Edit activity
 					</Text>
-				</EditButton>
-				<DeleteButton
+				</Button>
+				<Button
 					colorScheme="red"
 					size={{ base: "md", md: "md", lg: "lg" }}
 					leftIcon={<DeleteIcon />}
@@ -217,7 +220,7 @@ export const EventPage = () => {
 					<Text fontSize={{ base: "md", md: "md", lg: "lg" }}>
 						Delete activity
 					</Text>
-				</DeleteButton>
+				</Button>
 			</Flex>
 			<EditEventModal
 				isOpen={isEditEventModalOpen}

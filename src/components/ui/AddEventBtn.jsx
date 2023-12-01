@@ -17,9 +17,9 @@ export const AddEventBtn = ({ setEvents }) => {
 		<>
 			<NewEventBtn
 				variant="solid"
-				colorScheme={"purple"}
+				colorScheme="purple"
 				onClick={handleOpen}
-				mt="1em"
+				mt="5"
 				size={{ base: "md", md: "md", lg: "lg" }}
 			>
 				<Text fontSize={{ base: "sm", md: "md", lg: "lg" }}>

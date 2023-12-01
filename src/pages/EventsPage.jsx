@@ -1,4 +1,13 @@
-import { Container, Box, Heading, Flex, Grid, Spinner } from "@chakra-ui/react";
+import {
+	Container,
+	Box,
+	Center,
+	Heading,
+	Text,
+	Flex,
+	Grid,
+	Spinner,
+} from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { EventsCard } from "../components/ui/EventsCard";
@@ -19,6 +28,7 @@ export const EventsPage = () => {
 	const { events: initialEvents } = useLoaderData();
 	const [searchText, setSearchText] = useState("");
 	const [selectedCategory, setSelectedCategory] = useState(null);
+	const [error, setError] = useState(null);
 
 	const fetchEvents = async () => {
 		try {
@@ -27,19 +37,7 @@ export const EventsPage = () => {
 			setEvents(data);
 		} catch (error) {
 			console.error("Error fetching events:", error);
-			return (
-				<div
-					style={{
-						display: "flex",
-						justifyContent: "center",
-						marginTop: "10rem",
-					}}
-				>
-					<h1 style={{ fontSize: "42px" }}>
-						Error accessing activities. Please try again later..
-					</h1>
-				</div>
-			);
+			setError("Error loading the activities. Please try again later.");
 		}
 	};
 
@@ -71,62 +69,78 @@ export const EventsPage = () => {
 
 	if (!events || events.length === 0) {
 		return (
-			<div
-				style={{
-					display: "flex",
-					justifyContent: "center",
-					marginTop: "10rem",
-				}}
-			>
+			<Center mt="20em">
 				<Spinner size="lg" m="4" />
-				<h1 style={{ fontSize: "42px" }}>Loading....</h1>
-			</div>
+				<Heading fontWeight="thin">Loading...</Heading>
+			</Center>
 		);
 	} else {
 		const filteredEvents = filterEvents(events, selectedCategory, searchText);
 
 		return (
-				<Container maxW="auto" bg="gray.50" minHeight="100vh" centerContent>
-					<Box padding="4" bg="gray.50" color="black" w="80%">
-						<Flex justifyContent="space-between" alignItems="center">
-							<Heading
-								as="h2"
-								size={{ base: "lg", md: "2xl", lg: "3xl" }}
-								my="12"
-								color="#0d445e"
-							>
-								List of all activities
-							</Heading>
-							<AddEventBtn setEvents={setEvents} />
-						</Flex>
-						<Flex gap="12" justifyContent="space-between">
-							{categories && categories.length > 0 ? (
-								<FilterSelect
-									categories={categories}
-									setSelectedCategory={setSelectedCategory}
-								/>
-							) : null}
-							<SearchInput
-								value={searchText}
-								onChange={(e) => setSearchText(e.target.value)}
-							/>
-						</Flex>
-						<Grid
-							templateColumns={{ base: "repeat(1, 1fr)", lg: "repeat(2, 1fr)" }}
-							gap={6}
+			<Container maxW="auto" bg="gray.50" minHeight="100vh" centerContent>
+				<Box padding="4" bg="gray.50" color="black" w="85%">
+					<Flex
+						flexDirection={{ base: "column-reverse", lg: "row" }}
+						justifyContent={{ base: "start", lg: "space-between" }}
+						alignItems={{ base: "end", lg: "center" }}
+					>
+						<Text
+							as="h2"
+							alignSelf="start"
+							justifySelf="center"
+							fontSize={{ base: "2.5rem", md: "3.5rem", lg: "4rem" }}
+							my={{ base: "7", md: "10", lg: "12" }}
+							color="#0d445e"
+							fontWeight={{ base: "bold" }}
 						>
-							{filteredEvents.map((event) => (
-								<Link key={event.id} to={`event/${event.id}`}>
-									<EventsCard
-										event={event}
-										categories={categories}
-										onClick={() => setSelectedActivity(event)}
-									></EventsCard>
-								</Link>
-							))}
-						</Grid>
-					</Box>
-				</Container>
+							All activities
+						</Text>
+						<AddEventBtn setEvents={setEvents} />
+					</Flex>
+					<Flex
+						gap="12"
+						flexDirection={{ base: "column", lg: "row" }}
+						justifyContent={{ base: "start", lg: "space-between" }}
+						alignItems={{ base: "end", lg: "center" }}
+					>
+						{categories && categories.length > 0 ? (
+							<FilterSelect
+								categories={categories}
+								setSelectedCategory={setSelectedCategory}
+							/>
+						) : null}
+						<SearchInput
+							value={searchText}
+							onChange={(e) => setSearchText(e.target.value)}
+						/>
+					</Flex>
+					<Grid
+						templateColumns={{
+							base: "repeat(1, 1fr)",
+							xl: "repeat(2, 1fr)",
+						}}
+						gap={8}
+						my={8}
+					>
+						{filteredEvents.map((event) => (
+							<Link key={event.id} to={`event/${event.id}`}>
+								<EventsCard
+									event={event}
+									categories={categories}
+									onClick={() => setSelectedActivity(event)}
+								></EventsCard>
+							</Link>
+						))}
+					</Grid>
+					{/* Display the error message if there is an error */}
+					{error && (
+						<Center mt="10rem">
+							<Heading fontSize="42px">{error}</Heading>
+						</Center>
+					)}
+				</Box>
+			</Container>
 		);
 	}
 };

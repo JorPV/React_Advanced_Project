@@ -7,6 +7,8 @@ import {
 	CardBody,
 	Text,
 	Tag,
+	Box,
+	Spacer,
 	CardFooter,
 } from "@chakra-ui/react";
 import { useEventContext } from "../../context/EventsDataContext";
@@ -30,8 +32,7 @@ export const EventsCard = ({ event, onClick }) => {
 			direction={{ base: "column", sm: "row" }}
 			overflow="hidden"
 			variant="outline"
-			my={5}
-			minH={"350px"}
+			minH="full"
 			cursor="pointer"
 			_hover={{
 				transform: "scale(1.03)",
@@ -55,29 +56,34 @@ export const EventsCard = ({ event, onClick }) => {
 					<Text as="em" fontSize="lg" color="gray.600">
 						{event.description}
 					</Text>
-					<Flex h="full" direction="column" justifyContent="space-evenly">
-						<div>
+					<Flex
+						h="full"
+						direction="column"
+						justifyContent="space-evenly"
+						mt={{ base: "4", md: "0" }}
+					>
+						<Box>
 							<Text
 								fontWeight="semibold"
 								as="u"
-								fontSize={{ base: "md", md: "lg", lg: "19px" }}
+								fontSize={{ base: "md", md: "lg", lg: "18px" }}
 							>
 								Location:
 							</Text>
 							<Text
-								fontSize={{ base: "md", md: "lg", lg: "19px" }}
+								fontSize={{ base: "md", md: "lg", lg: "17px" }}
 								fontWeight="thin"
 							>
 								{event.location}
 							</Text>
-						</div>
-						<div>
+						</Box>
+						<Box>
 							<Text
 								fontWeight="semibold"
 								fontSize={{ base: "md", md: "lg", lg: "18px" }}
 							>
 								Starts:
-								<Text fontWeight="thin" ml={1} display="inline">
+								<Text fontWeight="thin" ml={1} display="inline" fontSize="17px">
 									{new Date(event.startTime).toLocaleString(
 										"en-US",
 										timeOptions
@@ -93,34 +99,33 @@ export const EventsCard = ({ event, onClick }) => {
 									{new Date(event.endTime).toLocaleString("en-US", timeOptions)}
 								</Text>
 							</Text>
-						</div>
+						</Box>
 					</Flex>
 				</CardBody>
 
-				<CardFooter h="105px">
-					<Flex flexDirection="column" justifyContent="end" alignItems="end">
-						<Text
-							fontWeight="semibold"
-							fontSize={{ base: "md", md: "lg", lg: "19px" }}
-							as="u"
-						>
-							Categories:
-							{(event.categoryIds || []).map((categoryId, index) => {
-								const category = categories.find((c) => c.id === categoryId);
-								return (
-									<Tag
-										key={index}
-										size={{ base: "md", md: "md", lg: "lg" }}
-										variant="outline"
-										colorScheme="purple"
-										ml="0.5em"
-									>
-										{category ? category.name : ""}
-									</Tag>
-								);
-							})}
-						</Text>
-					</Flex>
+				<CardFooter flexDirection="column">
+					<Spacer m="8"/>
+					<Text
+						fontWeight="semibold"
+						fontSize={{ base: "sm", md: "md", lg: "18px" }}
+						as="u"
+					>
+						Categories:
+						{(event.categoryIds || []).map((categoryId, index) => {
+							const category = categories.find((c) => c.id === categoryId);
+							return (
+								<Tag
+									key={index}
+									size={{ base: "sm", md: "md", lg: "md" }}
+									variant="outline"
+									colorScheme="purple"
+									ml="0.5em"
+								>
+									{category ? category.name : ""}
+								</Tag>
+							);
+						})}
+					</Text>
 				</CardFooter>
 			</Stack>
 		</Card>
