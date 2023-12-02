@@ -8,6 +8,7 @@ import { Root } from "./components/Root";
 import { loader as eventsListLoader } from "./pages/EventsPage";
 import { loader as eventLoader } from "./pages/EventPage";
 import { EventsProvider } from "./context/EventsDataContext";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const router = createBrowserRouter([
 	{
@@ -30,10 +31,12 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>
-		<ChakraProvider>
-			<EventsProvider>
-				<RouterProvider router={router} />
-			</EventsProvider>
-		</ChakraProvider>
+		<ErrorBoundary>
+			<ChakraProvider>
+				<EventsProvider>
+					<RouterProvider router={router} />
+				</EventsProvider>
+			</ChakraProvider>
+		</ErrorBoundary>
 	</React.StrictMode>
 );

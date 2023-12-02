@@ -17,8 +17,17 @@ import { SearchInput } from "../components/ui/SearchInput";
 import { FilterSelect } from "../components/ui/FilterSelect";
 
 export const loader = async () => {
-	const events = await fetch("http://localhost:3000/events");
-	return { events: await events.json() };
+	try {
+		const response = await fetch("http://localhost:3000/events");
+		if (!response.ok) {
+			throw new Error(`Failed to fetch events. Status: ${response.status}`);
+		}
+		const events = await response.json();
+		return { events };
+	} catch (error) {
+		console.error("Error fetching events:", error);
+		throw error;
+	}
 };
 
 export const EventsPage = () => {
@@ -33,11 +42,13 @@ export const EventsPage = () => {
 	const fetchEvents = async () => {
 		try {
 			const response = await fetch("http://localhost:3000/events");
+			if (!response.ok) {
+				throw new Error(`Failed to fetch events. Status: ${response.status}`);
+			}
 			const data = await response.json();
 			setEvents(data);
 		} catch (error) {
-			console.error("Error fetching events:", error);
-			setError("Error loading the activities. Please try again later.");
+			setError(`Error loading the activities. Please try again later.`);
 		}
 	};
 
@@ -47,7 +58,7 @@ export const EventsPage = () => {
 		} else {
 			fetchEvents();
 		}
-	}, [initialEvents, setEvents]);
+	}, [initialEvents]);
 
 	const filterEvents = (events, category, searchText) => {
 		let filteredEvents = events;
@@ -133,7 +144,7 @@ export const EventsPage = () => {
 							</Link>
 						))}
 					</Grid>
-					{/* Display the error message if there is an error */}
+					{/* Display the error message when there is an error */}
 					{error && (
 						<Center mt="10rem">
 							<Heading fontSize="42px">{error}</Heading>
